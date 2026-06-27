@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#6B4A8A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Empresa">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%236B4A8A'/%3E%3Ctext x='90' y='118' font-size='80' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'%3E📊%3C/text%3E%3C/svg%3E">
+<title>Constróii · Empresa</title>
+<style>
+:root{
+  --bg:#EFF1EE; --card:#FFFFFF; --ink:#22272B; --ink2:#5A636B;
+  --linha:#DDE1DC; --laranja:#E8650D; --laranja-esc:#C45104;
+  --verde:#1F7A4D; --verm:#C0392B; --cinza-obra:#3A4750;
+  --mono:ui-monospace,'SF Mono','Cascadia Mono',Consolas,monospace;
+  --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45}
+header{background:var(--cinza-obra);color:#fff;padding:14px 18px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.brand{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.brand h1{font-size:17px;font-weight:800;letter-spacing:.06em}
+.brand h1 span{color:var(--laranja)}
+.brand .obra{font-family:var(--mono);font-size:12px;opacity:.85}
+.gauge{margin:10px 0 12px;background:#2B353D;border-radius:4px;height:22px;position:relative;overflow:hidden}
+.gauge .fill{height:100%;background:repeating-linear-gradient(45deg,var(--laranja),var(--laranja) 10px,var(--laranja-esc) 10px,var(--laranja-esc) 20px);transition:width .4s}
+.gauge .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+nav{display:flex;gap:2px;overflow-x:auto}
+nav button{background:#2B353D;color:#B9C2C9;border:none;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;border-radius:6px 6px 0 0;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+nav button .ic{font-size:15px;line-height:1}
+#navAbas button.on{box-shadow:inset 0 -3px 0 #6B4A8A}
+nav button.on{background:var(--bg);color:var(--ink)}
+main{padding:16px;max-width:1100px;margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--linha);border-radius:8px;padding:12px}
+.card .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:4px}
+.card .v{font-family:var(--mono);font-size:19px;font-weight:700}
+.card .v.pos{color:var(--verde)}.card .v.neg{color:var(--verm)}.card .v.lar{color:var(--laranja-esc)}
+.card .s{font-size:11px;color:var(--ink2);margin-top:2px;font-family:var(--mono)}
+h2{font-size:15px;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+h2::before{content:'';width:10px;height:10px;background:var(--laranja);display:inline-block}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--linha);border-radius:8px;overflow:hidden;font-size:13px}
+th{background:#F7F8F6;text-align:left;padding:8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);border-bottom:1px solid var(--linha)}
+td{padding:7px 10px;border-bottom:1px solid var(--linha)}
+tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+.pos{color:var(--verde)}.neg{color:var(--verm)}
+.tag{display:inline-block;padding:1px 7px;border-radius:3px;font-size:11px;font-weight:700;font-family:var(--mono)}
+.tag.EPS{background:#FDEBDD;color:var(--laranja-esc)}
+.tag.BARRAMENTO{background:#E2EDE7;color:var(--verde)}
+.tag.PINTURA{background:#E3E8F2;color:#3D5A99}
+.tag.HORAS{background:#EEE;color:#555}
+.tag.SALARIOS{background:#E3E8F2;color:#3D5A99}
+.tag.ALOJAMENTO{background:#F2E8E3;color:#8A5A3D}
+.tag.TRANSPORTES{background:#E8F0E3;color:#4A6B2A}
+.tag.EQUIPAMENTO{background:#EFE3F2;color:#6B3D8A}
+.tag.OUTROS{background:#EEE;color:#555}
+.tag.FATURA{background:#E3E8F2;color:#3D5A99}
+.tag.CERTIFICACAO{background:#E2EDE7;color:#1F7A4D}
+.tag.AUTO{background:#FDEBDD;color:#C45104}
+.tag.FOTO{background:#EFE3F2;color:#6B3D8A}
+.tag.OUTRO{background:#EEE;color:#555}
+.tag.CHEFE{background:#3A4750;color:#fff}
+.tag.OFICIAL{background:#E2EDE7;color:var(--verde)}
+.tag.SERVENTE{background:#FDEBDD;color:var(--laranja-esc)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+select,input[type=text],input[type=number],input[type=date]{padding:7px 9px;border:1px solid var(--linha);border-radius:6px;font-size:13px;background:#fff;font-family:inherit}
+input[type=number]{font-family:var(--mono);text-align:right}
+button.act{background:var(--laranja);color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer}
+button.act:hover{background:var(--laranja-esc)}
+button.sec{background:#fff;color:var(--ink);border:1px solid var(--linha);padding:7px 12px;border-radius:6px;font-size:13px;cursor:pointer}
+button.mini{background:none;border:none;cursor:pointer;font-size:13px;padding:2px 5px}
+.form{background:var(--card);border:1px solid var(--linha);border-radius:8px;padding:14px;margin:10px 0}
+.form .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.form label{display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600}
+.chk{display:flex;gap:6px;flex-wrap:wrap}
+.chk label{flex-direction:row;align-items:center;gap:5px;background:#F7F8F6;border:1px solid var(--linha);border-radius:6px;padding:6px 10px;font-size:12px;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--ink)}
+.chk label.sel{background:#FDEBDD;border-color:var(--laranja)}
+.note{font-size:12px;color:var(--ink2);margin:6px 0}
+.scroll{overflow-x:auto}
+.tot td{font-weight:700;background:#F7F8F6}
+.save{position:fixed;bottom:14px;right:14px;background:var(--verde);color:#fff;padding:8px 14px;border-radius:6px;font-size:12px;font-family:var(--mono);opacity:0;transition:opacity .3s;pointer-events:none}
+.save.show{opacity:1}
+.big{background:var(--card);border:1px solid var(--linha);border-radius:8px;padding:14px;margin-bottom:14px}
+.big .titulo{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);font-weight:700;margin-bottom:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:4px}
+.kpi .n1{font-family:var(--mono);font-size:24px;font-weight:800;line-height:1.1}
+.kpi .n2{font-size:11px;color:var(--ink2);margin-top:2px}
+.pbar{height:18px;background:#ECEEEA;border-radius:4px;overflow:hidden;display:flex;margin:4px 0}
+.pbar div{height:100%}
+.pbar .feito{background:var(--cor,var(--laranja))}
+.pbar .pend{background:repeating-linear-gradient(45deg,#D8DBD5,#D8DBD5 6px,#E8EAE5 6px,#E8EAE5 12px)}
+.flinha{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center;margin:9px 0}
+.flinha .fnum{font-family:var(--mono);font-size:12px;text-align:right;white-space:nowrap}
+.mchart{display:flex;align-items:flex-end;gap:8px;height:130px;margin:8px 0 4px;padding:0 2px}
+.mcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.mcol .mv{font-family:var(--mono);font-size:10px;color:var(--ink2);margin-bottom:3px;white-space:nowrap}
+.mcol .mb{width:100%;max-width:46px;background:var(--laranja);border-radius:3px 3px 0 0;position:relative;overflow:hidden}
+.mcol .mb .mp{position:absolute;bottom:0;left:0;right:0;background:var(--cinza-obra);opacity:.45}
+.mcol .ml{font-size:10px;color:var(--ink2);margin-top:4px;font-family:var(--mono)}
+.m3{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.m3 .m3bars{display:flex;align-items:flex-end;justify-content:center;gap:2px;width:100%;height:100%}
+.m3 .m3b{width:30%;max-width:18px;border-radius:2px 2px 0 0;min-height:2px}
+.m3 .ml{font-size:10px;color:var(--ink2);margin-top:4px;font-family:var(--mono)}
+.wlinha{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;margin:8px 0}
+.wcard{background:var(--card);border:1px solid var(--linha);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+.wcard .topo{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.wcard .nome{font-size:14px;font-weight:800}
+.wcard .apg{font-family:var(--mono);font-size:17px;font-weight:800;white-space:nowrap}
+.wcard .linha2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.wcard .mini-n{font-family:var(--mono);font-size:13px}
+.wcard details{margin-top:8px;font-size:12px}
+.wcard summary{cursor:pointer;color:var(--ink2);font-size:12px}
+.wcard .calc{font-family:var(--mono);font-size:12px;color:var(--ink2);padding:8px 0 0;display:flex;gap:14px;flex-wrap:wrap}
+.wcard .calc b{color:var(--ink)}
+.estado{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700}
+.estado.ok{background:#E2EDE7;color:var(--verde)}
+.estado.falta{background:#F9E3DF;color:var(--verm)}
+.estado.mais{background:#FDEBDD;color:var(--laranja-esc)}
+.ledger{font-size:14px}
+.ledger .lrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 4px;border-bottom:1px dashed var(--linha)}
+.ledger .lrow.sub{padding-left:22px;font-size:12.5px;color:var(--ink2);border-bottom:none;padding-top:2px;padding-bottom:2px}
+.ledger .lrow.res{border-top:2px solid var(--ink);border-bottom:none;margin-top:4px;padding-top:10px}
+.ledger .lval{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.ledger .res .lval{font-size:22px;font-weight:800}
+.ledger .res .llbl{font-size:15px;font-weight:800}
+
+.tlock{max-height:calc(100vh - 250px);overflow:auto}
+.tlock th{position:sticky;top:0;z-index:5;background:#F7F8F6;box-shadow:0 1px 0 var(--linha)}
+.tlock tr.tot td{position:sticky;bottom:0;background:#F7F8F6;box-shadow:0 -1px 0 var(--linha)}
+@media(max-width:640px){
+  main{padding:10px}
+  td,th{padding:6px}
+  .flinha{grid-template-columns:80px 1fr auto}
+  .wlinha{grid-template-columns:90px 1fr auto}
+  #navAbas button .tx{display:none}
+  #navAbas button{padding:10px 13px}
+  #navAbas button .ic{font-size:19px}
+  #navAbas button.on .tx{display:inline}
+  header h1{font-size:14px!important;line-height:1.2}
+  input[type=text],input[type=number],input[type=date],input[type=month],select{max-width:100%}
+  .cards{grid-template-columns:1fr 1fr!important}
+  .big{padding:12px}
+}
+@media(max-width:400px){
+  .cards{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1 id="hTitulo">CONSTRÓ<span>II</span>.ES · AUTO DE MEDIÇÃO · EMPRESA</h1>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="obra" id="hObra"></div>
+      <select id="selObra" style="display:none"></select>
+      <button id="bNovaObra" title="Criar nova obra" style="background:var(--verde);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;margin-left:auto">+ Obra</button>
+      <button id="bGuardarTudo" style="background:var(--laranja);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer">💾 Guardar tudo</button>
+    </div>
+  </div>
+  <div class="gauge"><div class="fill" id="gFill"></div><div class="lbl" id="gLbl"></div></div>
+  <nav style="margin-bottom:6px;align-items:center">
+    <button class="on" data-t="todas" style="background:#6B4A8A;color:#fff;font-weight:800;border:none">📊 Todas as obras</button>
+    <span id="navObras" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center"></span>
+  </nav>
+  <nav id="navAbas">
+    <button data-t="geral"><span class="ic">📊</span><span class="tx">Resumo Geral</span></button>
+    <button data-t="auto"><span class="ic">📐</span><span class="tx">Auto de medição</span></button>
+    <button data-t="m2"><span class="ic">📋</span><span class="tx">Resumo Auto</span></button>
+    <button data-t="resfat"><span class="ic">🧾</span><span class="tx">Faturação</span></button>
+    <button data-t="rescus"><span class="ic">💶</span><span class="tx">Custos</span></button>
+    <button data-t="cfgfat"><span class="ic">⚙️</span><span class="tx">Config. Faturação</span></button>
+    <button data-t="cfgcus"><span class="ic">🔧</span><span class="tx">Config. Custos</span></button>
+    <button data-t="arq"><span class="ic">📁</span><span class="tx">Arquivo</span></button>
+    <button data-t="dados"><span class="ic">💾</span><span class="tx">Dados</span></button>
+  </nav>
+</header>
+<main id="main"></main>
+<div class="save" id="saveToast">✓ Guardado</div>
+
+<script>
+const SEED = {"config": {"obra": "", "cliente": "", "orcamento": 0, "fases": [{"id": "F1", "nome": "EPS", "cor": "#E8650D"}, {"id": "F2", "nome": "BARRAMENTO", "cor": "#1F7A4D"}, {"id": "F3", "nome": "PINTURA", "cor": "#3D5A99"}, {"id": "F4", "nome": "FASE 4", "cor": "#9B287B"}, {"id": "F5", "nome": "FASE 5", "cor": "#0E7C7B"}, {"id": "F6", "nome": "FASE 6", "cor": "#B8860B"}], "tarifas": [{"ate": "", "precos": {"F1": 0, "F2": 0, "F3": 0, "F4": 0, "F5": 0, "F6": 0, "HORAS": 0}, "ret": 0}], "encargosPct": 0}, "zones": [], "extras": [], "custos": [], "certs": [], "nextZoneId": 1, "nextExtraId": 1, "nextCustoId": 1, "nextCertId": 1, "histCfg": [{"ts": "2026-06-14 20:00", "txt": "App CONSTRÓII.ES — 6 fases editáveis"}]};
+const OBRA_SEGOVIA = {"config": {"obra": "SEGOVIA_1", "cliente": "Grupo García", "orcamento": 0, "tarifas": [{"ate": "2026-04", "precos": {"F1": 11, "F2": 11, "F3": 5, "HORAS": 0}, "ret": 0}, {"ate": "", "precos": {"F1": 12, "F2": 12, "F3": 6, "HORAS": 0}, "ret": 5}], "encargosPct": 18.55, "fases": [{"id": "F1", "nome": "EPS", "cor": "#E8650D"}, {"id": "F2", "nome": "BARRAMENTO", "cor": "#1F7A4D"}, {"id": "F3", "nome": "PINTURA", "cor": "#3D5A99"}, {"id": "F4", "nome": "FASE 4", "cor": "#9B287B"}, {"id": "F5", "nome": "FASE 5", "cor": "#0E7C7B"}, {"id": "F6", "nome": "FASE 6", "cor": "#B8860B"}]}, "zones": [{"id": 1, "desc": "Fachada lateral 1 (A)", "comp": 0, "alt": 0, "area": 232.16, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 2, "desc": "Fachada lateral 1 (B)", "comp": 0, "alt": 0, "area": 41.62, "dataAuto": "2025-10-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 3, "desc": "Fachada lateral 1 S", "comp": 0, "alt": 0, "area": 137.28, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 4, "desc": "Fachada lateral 1 — teto", "comp": 0, "alt": 0, "area": 11.36, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 5, "desc": "FOTO1 FACHADA VENTANAS\\TERRAÇO", "comp": 0, "alt": 0, "area": 53.2, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 6, "desc": "FOTO3 FACHADA VENTANAS1", "comp": 0, "alt": 0, "area": 209.54, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 7, "desc": "FOTO2 FACHADA LATERAL TETOS1", "comp": 0, "alt": 0, "area": 125.06, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 8, "desc": "FOTO2 FACHADA LATERAL TETOS2", "comp": 0, "alt": 0, "area": 125.06, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 9, "desc": "FOTO4 FACHADA BIBLIOTECA", "comp": 0, "alt": 0, "area": 477.65, "dataAuto": "2025-11-30", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 10, "desc": "TERRAÇO BILIOTECA + LATERAL", "comp": 0, "alt": 0, "area": 115.77, "dataAuto": "2025-12-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 11, "desc": "FACHADA TERRAÇO LATERAL", "comp": 0, "alt": 0, "area": 57.05, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 12, "desc": "FACHADA LATERAL 2", "comp": 0, "alt": 0, "area": 156.79, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 13, "desc": "FACHADA LATERAL INTERIOR", "comp": 0, "alt": 0, "area": 221.39, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 14, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 0, "alt": 0, "area": 43.01, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 15, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 0, "alt": 0, "area": 35.52, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 16, "desc": "FACHADA LATERAL INTERIOR FUNDO", "comp": 0, "alt": 0, "area": 15.58, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 17, "desc": "TETO INT. TERRAZA", "comp": 0, "alt": 0, "area": 37.57, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 18, "desc": "F qC. y T. DE SEGOVIA (INT)", "comp": 0, "alt": 0, "area": 138.62, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 19, "desc": "FOTO1 FEV Fachada principal (janelas)", "comp": 0, "alt": 0, "area": 280.37, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 20, "desc": "FOTO1 FEV Sub 1,54", "comp": 0, "alt": 0, "area": 1.54, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 21, "desc": "FOTO1 FEV Teto pequeno 1", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 22, "desc": "FOTO1 FEV Teto pequeno 2", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 23, "desc": "FOTO1 FEV Teto pequeno 3", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 24, "desc": "FOTO2 FEV Sub 2,44", "comp": 0, "alt": 0, "area": 2.44, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 25, "desc": "FOTO2 FEV Tetos 91,65", "comp": 0, "alt": 0, "area": 91.65, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 26, "desc": "FOTO2 FEV Sub 42,90", "comp": 0, "alt": 0, "area": 42.9, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 27, "desc": "FOTO2 FEV Sub 6,24", "comp": 0, "alt": 0, "area": 6.24, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 28, "desc": "FOTO2 FEV Balcão 50,22", "comp": 0, "alt": 0, "area": 50.22, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 29, "desc": "FOTO2 FEV Balcão 50,63 (A)", "comp": 0, "alt": 0, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 30, "desc": "FOTO2 FEV Balcão 50,63 (B)", "comp": 0, "alt": 0, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 31, "desc": "FOTO2 FEV Corredor / túnel", "comp": 0, "alt": 0, "area": 130.1, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 32, "desc": "FOTO3 FEV Sub 11,90", "comp": 0, "alt": 0, "area": 11.9, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 33, "desc": "FOTO3 FEV Sub 8,19 (A)", "comp": 0, "alt": 0, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 34, "desc": "FOTO3 FEV Sub 8,19 (B)", "comp": 0, "alt": 0, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 35, "desc": "FOTO3 FEV Tetos + túnel TRIS", "comp": 0, "alt": 0, "area": 108.58, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 36, "desc": "FOTO4 FEV Fachada lat. comp. (A)", "comp": 0, "alt": 0, "area": 81.77, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 37, "desc": "FOTO4 FEV Fachada lat. comp. (B)", "comp": 0, "alt": 0, "area": 58.28, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 38, "desc": "FOTO4 FEV Fachada lat. comp. ©", "comp": 0, "alt": 0, "area": 23.1, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 39, "desc": "FOTO1 MARÇO Fachada principal grande", "comp": 0, "alt": 0, "area": 438.2, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 40, "desc": "FOTO1 MARÇO Fachada lateral", "comp": 0, "alt": 0, "area": 104.58, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 41, "desc": "FOTO1 MARÇO Fachada pequena", "comp": 0, "alt": 0, "area": 39.05, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 42, "desc": "FOTO2 MARÇO Sub 5,87", "comp": 0, "alt": 0, "area": 5.87, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 43, "desc": "FOTO2 MARÇO Sub 10,35", "comp": 0, "alt": 0, "area": 10.35, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 44, "desc": "FOTO2 MARÇO Terraço", "comp": 0, "alt": 0, "area": 83.84, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 45, "desc": "FOTO2 MARÇO Janela central", "comp": 0, "alt": 0, "area": 8.7, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 46, "desc": "FOTO2 MARÇO Fachada lateral 2", "comp": 0, "alt": 0, "area": 6.89, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 47, "desc": "FOTO2 MARÇO Interior 1", "comp": 0, "alt": 0, "area": 4.59, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 48, "desc": "FOTO2 MARÇO Interior 2", "comp": 0, "alt": 0, "area": 4.86, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 49, "desc": "FOTO1 ABRIL F. C/P. Tierra INT. (Compl.)", "comp": 0, "alt": 0, "area": 221.79, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 50, "desc": "FOTO4 ABRIL C/ C. y T. de Segovia", "comp": 0, "alt": 0, "area": 144.62, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 51, "desc": "FOTO6 ABRIL C/ Procuradores (Ter. SUP.)", "comp": 0, "alt": 0, "area": 179.38, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 52, "desc": "FOTO5 ABRIL C/ P. Tierra (desde J. Dil.)", "comp": 0, "alt": 0, "area": 745.26, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 53, "desc": "FOTO2 ABRIL C/ C. y T. Seg. (J. Dil.)", "comp": 0, "alt": 0, "area": 460.22, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 54, "desc": "FOTO3 ABRIL C/ C. y T. Seg. (Ter. SUP.)", "comp": 0, "alt": 0, "area": 140.11, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 55, "desc": "FOTO1 JUNHO FACHADA", "comp": 0, "alt": 0, "area": 298.31, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 56, "desc": "FOTO1 JUNHO TUNEL", "comp": 0, "alt": 0, "area": 76.7, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 57, "desc": "FOTO2 JUNHO TETOS1 LATERAL", "comp": 0, "alt": 0, "area": 0.81, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 58, "desc": "FOTO2 JUNHO TETOS1 FRENTE", "comp": 0, "alt": 0, "area": 3.38, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 59, "desc": "FOTO2 JUNHO TETOS1 TETO", "comp": 0, "alt": 0, "area": 13.5, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 60, "desc": "FOTO2 JUNHO TETOS2+3 LATERAL", "comp": 0, "alt": 0, "area": 1.44, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 61, "desc": "FOTO2 JUNHO TETOS2+3 FRENTE", "comp": 0, "alt": 0, "area": 6, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 62, "desc": "FOTO2 JUNHO TETOS2+3 TETO", "comp": 0, "alt": 0, "area": 27, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 63, "desc": "FOTO2 JUNHO TETOS4 LATERAL", "comp": 0, "alt": 0, "area": 1.62, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 64, "desc": "FOTO2 JUNHO TETOS4 FRENTE", "comp": 0, "alt": 0, "area": 6.93, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 65, "desc": "FOTO2 JUNHO TETOS4 TETO", "comp": 0, "alt": 0, "area": 27.72, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 66, "desc": "FOTO2 JUNHO TETOS5+6 LATERAL", "comp": 0, "alt": 0, "area": 2.88, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 67, "desc": "FOTO2 JUNHO TETOS5+6 FRENTE", "comp": 0, "alt": 0, "area": 12.32, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 68, "desc": "FOTO2 JUNHO TETOS5+6 TETO", "comp": 0, "alt": 0, "area": 55.44, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 69, "desc": "FOTO2 JUNHO FACHADA COMPLETA", "comp": 0, "alt": 0, "area": 373.54, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}], "extras": [], "certs": [{"id": 1, "mes": "2026-05", "num": "PRO260033 (Certificación Nº1)", "base": 45629.63, "recebido": 20000, "data": "2026-05-29", "nota": "COM ERRO — acerto no próximo mês. Retenção 5% (-2.281,49). Total fatura 43.348,15 €. Cliente pagou 20.000 € por conta."}], "histCfg": [{"ts": "2026-06-14 18:30", "txt": "Apagados todos os custos (8 registos, 102.150,39 €). Mantida só a certificação de maio (PRO260033)."}, {"ts": "2026-06-14 18:00", "txt": "Auto sincronizado da tabela correta: 12 linhas + 91 fases anuladas"}, {"ts": "2026-06-14 09:20", "txt": "Certificação Nº1 PRO260033 registada: base 45.629,63 € (com erro, acerto próximo mês) · cliente pagou 20.000 € · falta receber 23.348,15 €"}, {"ts": "2026-06-14 09:10", "txt": "Faturação antiga eliminada (6 certificações) — não correspondia ao auto atual com anulações. A registar de novo."}, {"ts": "2026-06-14 09:00", "txt": "Sync da app Funcionários: 69 zonas com anulações (12 linhas + 91 fases anuladas)"}, {"ts": "2026-06-14 08:30", "txt": "Faturação real ao cliente registada: 6 meses, 106.385,68 € (recebido 69.316,75 € · em atraso 37.068,93 €)"}, {"ts": "2026-06-14 08:20", "txt": "Encargos definidos em 18,55% conforme folha do contabilista (Maiker: abonos 1.710,82 + extras 317,31 = custo 2.028,13). Inclui SS patronal, provisões SF/SN+férias, trib. autónoma, EPI+segurança, exames."}, {"ts": "2026-06-14 08:10", "txt": "Encargos ajustados de 12% para 17% (conf. recibos: base SS inclui destacamento tributado, SS patronal ≈ 314,93 €/trab ≈ 16,7% do bruto)"}, {"ts": "2026-06-14 08:00", "txt": "Encargos patronais ajustados de 32% para 12% (conf. recibos: SS só sobre venc.+subsídios ≈ 12,5% do bruto)"}, {"ts": "2026-06-14 07:50", "txt": "Sincronização da app Funcionários: 69 zonas atualizadas + 8 meses de salários (base 86.166,51 € + 32.0% encargos)"}], "nextZoneId": 70, "nextExtraId": 1, "nextCertId": 2, "custos": [], "nextCustoId": 1};
+const STORE_INICIAL = {"obras": [{"id": "obra1", "nome": "SEGOVIA_1_92_VIVENDAS", "db": {"config": {"obra": "SEGOVIA_1_92_VIVENDAS", "cliente": "GRUPO GARCIA S.L.", "orcamento": 0, "fases": [{"id": "F1", "nome": "EPS", "cor": "#E8650D"}, {"id": "F2", "nome": "BARRAMENTO", "cor": "#1F7A4D"}, {"id": "F3", "nome": "PINTURA", "cor": "#3D5A99"}, {"id": "F4", "nome": "FASE 4", "cor": "#9B287B", "ativa": false}, {"id": "F5", "nome": "FASE 5", "cor": "#0E7C7B", "ativa": false}, {"id": "F6", "nome": "FASE 6", "cor": "#B8860B", "ativa": false}], "tarifas": [{"ate": "", "precos": {"F1": 12, "F2": 12, "F3": 6, "F4": 5, "F5": 0, "F6": 0, "HORAS": 20}, "ret": 5}], "encargosPct": 18.5}, "zones": [{"id": 1, "desc": "Fachada lateral 1 (A)", "comp": 0, "alt": 0, "area": 232.16, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 2, "desc": "Fachada lateral 1 (B)", "comp": 0, "alt": 0, "area": 41.62, "dataAuto": "2025-10-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": {"anulada": true, "anterior": null}, "F5": {"anulada": true, "anterior": null}, "F6": {"anulada": true, "anterior": null}}}, {"id": 3, "desc": "Fachada lateral 1 S", "comp": 0, "alt": 0, "area": 137.28, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 4, "desc": "Fachada lateral 1 — teto", "comp": 0, "alt": 0, "area": 11.36, "dataAuto": "2025-10-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 5, "desc": "FOTO1 FACHADA VENTANAS\\TERRAÇO", "comp": 0, "alt": 0, "area": 53.2, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": {"anulada": true, "anterior": null}, "F5": {"anulada": true, "anterior": null}, "F6": {"anulada": true, "anterior": null}}}, {"id": 6, "desc": "FOTO3 FACHADA VENTANAS1", "comp": 0, "alt": 0, "area": 209.54, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": {"anulada": true, "anterior": null}, "F5": {"anulada": true, "anterior": null}, "F6": {"anulada": true, "anterior": null}}}, {"id": 7, "desc": "FOTO2 FACHADA LATERAL TETOS1", "comp": 0, "alt": 0, "area": 125.06, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": {"anulada": true, "anterior": null}, "F5": {"anulada": true, "anterior": null}, "F6": {"anulada": true, "anterior": null}}}, {"id": 8, "desc": "FOTO2 FACHADA LATERAL TETOS2", "comp": 0, "alt": 0, "area": 125.06, "dataAuto": "2025-11-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": {"anulada": true, "anterior": null}, "F5": {"anulada": true, "anterior": null}, "F6": {"anulada": true, "anterior": null}}}, {"id": 9, "desc": "FOTO4 FACHADA BIBLIOTECA", "comp": 0, "alt": 0, "area": 477.65, "dataAuto": "2025-11-30", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 10, "desc": "TERRAÇO BILIOTECA + LATERAL", "comp": 0, "alt": 0, "area": 115.77, "dataAuto": "2025-12-31", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 11, "desc": "FACHADA TERRAÇO LATERAL", "comp": 0, "alt": 0, "area": 57.05, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": {"anulada": true, "anterior": null}}}, {"id": 12, "desc": "FACHADA LATERAL 2", "comp": 0, "alt": 0, "area": 156.79, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 13, "desc": "FACHADA LATERAL INTERIOR", "comp": 0, "alt": 0, "area": 221.39, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 14, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 0, "alt": 0, "area": 43.01, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 15, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 0, "alt": 0, "area": 35.52, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 16, "desc": "FACHADA LATERAL INTERIOR FUNDO", "comp": 0, "alt": 0, "area": 15.58, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 17, "desc": "TETO INT. TERRAZA", "comp": 0, "alt": 0, "area": 37.57, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 18, "desc": "F qC. y T. DE SEGOVIA (INT)", "comp": 0, "alt": 0, "area": 138.62, "dataAuto": "2025-12-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 19, "desc": "FOTO1 FEV Fachada principal (janelas)", "comp": 0, "alt": 0, "area": 280.37, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 20, "desc": "FOTO1 FEV Sub 1,54", "comp": 0, "alt": 0, "area": 1.54, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 21, "desc": "FOTO1 FEV Teto pequeno 1", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 22, "desc": "FOTO1 FEV Teto pequeno 2", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 23, "desc": "FOTO1 FEV Teto pequeno 3", "comp": 0, "alt": 0, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true, "anterior": null}, "F2": {"anulada": true, "anterior": null}, "F3": {"anulada": true, "anterior": null}, "F4": null, "F5": null, "F6": null}}, {"id": 24, "desc": "FOTO2 FEV Sub 2,44", "comp": 0, "alt": 0, "area": 2.44, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 25, "desc": "FOTO2 FEV Tetos 91,65", "comp": 0, "alt": 0, "area": 91.65, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 26, "desc": "FOTO2 FEV Sub 42,90", "comp": 0, "alt": 0, "area": 42.9, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 27, "desc": "FOTO2 FEV Sub 6,24", "comp": 0, "alt": 0, "area": 6.24, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 28, "desc": "FOTO2 FEV Balcão 50,22", "comp": 0, "alt": 0, "area": 50.22, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 29, "desc": "FOTO2 FEV Balcão 50,63 (A)", "comp": 0, "alt": 0, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 30, "desc": "FOTO2 FEV Balcão 50,63 (B)", "comp": 0, "alt": 0, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": null, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}, "anulada": true}, {"id": 31, "desc": "FOTO2 FEV Corredor / túnel", "comp": 0, "alt": 0, "area": 130.1, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 32, "desc": "FOTO3 FEV Sub 11,90", "comp": 0, "alt": 0, "area": 11.9, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 33, "desc": "FOTO3 FEV Sub 8,19 (A)", "comp": 0, "alt": 0, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 34, "desc": "FOTO3 FEV Sub 8,19 (B)", "comp": 0, "alt": 0, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 35, "desc": "FOTO3 FEV Tetos + túnel TRIS", "comp": 0, "alt": 0, "area": 108.58, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 36, "desc": "FOTO4 FEV Fachada lat. comp. (A)", "comp": 0, "alt": 0, "area": 81.77, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 37, "desc": "FOTO4 FEV Fachada lat. comp. (B)", "comp": 0, "alt": 0, "area": 58.28, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 38, "desc": "FOTO4 FEV Fachada lat. comp. ©", "comp": 0, "alt": 0, "area": 23.1, "dataAuto": "2026-02-28", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 39, "desc": "FOTO1 MARÇO Fachada principal grande", "comp": 0, "alt": 0, "area": 438.2, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 40, "desc": "FOTO1 MARÇO Fachada lateral", "comp": 0, "alt": 0, "area": 104.58, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 41, "desc": "FOTO1 MARÇO Fachada pequena", "comp": 0, "alt": 0, "area": 39.05, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 42, "desc": "FOTO2 MARÇO Sub 5,87", "comp": 0, "alt": 0, "area": 5.87, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 43, "desc": "FOTO2 MARÇO Sub 10,35", "comp": 0, "alt": 0, "area": 10.35, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}, "F4": null, "F5": null, "F6": null}}, {"id": 44, "desc": "FOTO2 MARÇO Terraço", "comp": 0, "alt": 0, "area": 83.84, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 45, "desc": "FOTO2 MARÇO Janela central", "comp": 0, "alt": 0, "area": 8.7, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 46, "desc": "FOTO2 MARÇO Fachada lateral 2", "comp": 0, "alt": 0, "area": 6.89, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 47, "desc": "FOTO2 MARÇO Interior 1", "comp": 0, "alt": 0, "area": 4.59, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 48, "desc": "FOTO2 MARÇO Interior 2", "comp": 0, "alt": 0, "area": 4.86, "dataAuto": "2026-03-31", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 49, "desc": "FOTO1 ABRIL F. C/P. Tierra INT. (Compl.)", "comp": 0, "alt": 0, "area": 221.79, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": {"mes": "2026-05"}, "F4": null, "F5": null, "F6": null}}, {"id": 50, "desc": "FOTO4 ABRIL C/ C. y T. de Segovia", "comp": 0, "alt": 0, "area": 144.62, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 51, "desc": "FOTO6 ABRIL C/ Procuradores (Ter. SUP.)", "comp": 0, "alt": 0, "area": 179.38, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 52, "desc": "FOTO5 ABRIL C/ P. Tierra (desde J. Dil.)", "comp": 0, "alt": 0, "area": 745.26, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 53, "desc": "FOTO2 ABRIL C/ C. y T. Seg. (J. Dil.)", "comp": 0, "alt": 0, "area": 460.22, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 54, "desc": "FOTO3 ABRIL C/ C. y T. Seg. (Ter. SUP.)", "comp": 0, "alt": 0, "area": 140.11, "dataAuto": "2026-05-30", "fases": {"F1": {"mes": "2026-05"}, "F2": {"mes": "2026-05"}, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 55, "desc": "FOTO1 JUNHO FACHADA", "comp": 0, "alt": 0, "area": 298.31, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 56, "desc": "FOTO1 JUNHO TUNEL", "comp": 0, "alt": 0, "area": 76.7, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 57, "desc": "FOTO2 JUNHO TETOS1 LATERAL", "comp": 0, "alt": 0, "area": 0.81, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 58, "desc": "FOTO2 JUNHO TETOS1 FRENTE", "comp": 0, "alt": 0, "area": 3.38, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 59, "desc": "FOTO2 JUNHO TETOS1 TETO", "comp": 0, "alt": 0, "area": 13.5, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 60, "desc": "FOTO2 JUNHO TETOS2+3 LATERAL", "comp": 0, "alt": 0, "area": 1.44, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 61, "desc": "FOTO2 JUNHO TETOS2+3 FRENTE", "comp": 0, "alt": 0, "area": 6, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 62, "desc": "FOTO2 JUNHO TETOS2+3 TETO", "comp": 0, "alt": 0, "area": 27, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 63, "desc": "FOTO2 JUNHO TETOS4 LATERAL", "comp": 0, "alt": 0, "area": 1.62, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 64, "desc": "FOTO2 JUNHO TETOS4 FRENTE", "comp": 0, "alt": 0, "area": 6.93, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 65, "desc": "FOTO2 JUNHO TETOS4 TETO", "comp": 0, "alt": 0, "area": 27.72, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 66, "desc": "FOTO2 JUNHO TETOS5+6 LATERAL", "comp": 0, "alt": 0, "area": 2.88, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 67, "desc": "FOTO2 JUNHO TETOS5+6 FRENTE", "comp": 0, "alt": 0, "area": 12.32, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 68, "desc": "FOTO2 JUNHO TETOS5+6 TETO", "comp": 0, "alt": 0, "area": 55.44, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}, {"id": 69, "desc": "FOTO2 JUNHO FACHADA COMPLETA", "comp": 0, "alt": 0, "area": 373.54, "dataAuto": "2026-06-30", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null, "F4": null, "F5": null, "F6": null}}], "extras": [], "custos": [{"id": 1, "mes": "2026-05", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 20844.29, "valor": 24700.48, "data": "", "auto": true}, {"id": 2, "mes": "2026-06", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 6257.83, "valor": 7415.53, "data": "", "auto": true}, {"id": 3, "mes": "2026-06", "cat": "ALOJAMENTO", "desc": "CASA SEGOVIA (renda fixa)", "valor": 1187.13, "data": ""}, {"id": 4, "mes": "2026-07", "cat": "ALOJAMENTO", "desc": "CASA SEGOVIA (renda fixa)", "valor": 1187.13, "data": ""}, {"id": 5, "mes": "2026-08", "cat": "ALOJAMENTO", "desc": "CASA SEGOVIA (renda fixa)", "valor": 1187.13, "data": ""}], "certs": [{"id": 3, "mes": "2026-05", "num": "CERTIFICADO_1", "base": 45629.63, "recebido": 20000, "data": "2026-06-05", "nota": "ERRO NO CERTIFICADO"}], "nextZoneId": 70, "nextExtraId": 1, "nextCustoId": 6, "nextCertId": 4, "histCfg": [{"ts": "2026-06-20 07:54", "txt": "Alojamento renda fixa: 1187,13 €/mês × 3 meses = 3561,39 €"}, {"ts": "2026-06-19 13:31", "txt": "Fase F3 reativada em \"FOTO2 MARÇO Terraço\""}, {"ts": "2026-06-19 13:31", "txt": "Fase F3 ANULADA em \"FOTO2 MARÇO Terraço\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F3 ANULADA em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F2 ANULADA em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F1 ANULADA em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F1 reativada em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F2 reativada em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-19 07:22", "txt": "Fase F3 reativada em \"FOTO1 FEV Teto pequeno 3\""}, {"ts": "2026-06-18 12:03", "txt": "Fase F3 reativada em \"FOTO2 JUNHO FACHADA COMPLETA\""}, {"ts": "2026-06-18 12:03", "txt": "Fase F3 ANULADA em \"FOTO2 JUNHO FACHADA COMPLETA\""}, {"ts": "2026-06-17 14:14", "txt": "Sincronização da app Funcionários (2026-06-17 14:14): 0 zonas novas · 0 fases atualizadas · 0 anulações · 0 horas · 2 meses de salários"}, {"ts": "2026-06-17 13:34", "txt": "Fase F3 reativada em \"FOTO2 JUNHO FACHADA COMPLETA\""}, {"ts": "2026-06-17 13:34", "txt": "Fase F3 ANULADA em \"FOTO2 JUNHO FACHADA COMPLETA\""}, {"ts": "2026-06-17 13:18", "txt": "Sincronização da app Funcionários (2026-06-17 13:18): 0 zonas novas · 0 fases atualizadas · 0 anulações · 0 horas · 2 meses de salários"}, {"ts": "2026-06-17 13:07", "txt": "Fase F6 ANULADA em \"FACHADA TERRAÇO LATERAL\""}, {"ts": "2026-06-17 08:20", "txt": "Tarifa 1 F4 0,00 → 5,00 €"}, {"ts": "2026-06-17 08:20", "txt": "Nomes/cores das fases atualizados: EPS, BARRAMENTO, PINTURA, PINTURA LISA, FASE 5, FASE 6"}, {"ts": "2026-06-16 08:27", "txt": "Fase F6 ANULADA em \"FOTO3 FACHADA VENTANAS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F6 ANULADA em \"FOTO2 FACHADA LATERAL TETOS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F6 ANULADA em \"FOTO2 FACHADA LATERAL TETOS2\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F5 ANULADA em \"FOTO2 FACHADA LATERAL TETOS2\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F5 ANULADA em \"FOTO2 FACHADA LATERAL TETOS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F5 ANULADA em \"FOTO3 FACHADA VENTANAS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F4 ANULADA em \"FOTO2 FACHADA LATERAL TETOS2\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F4 ANULADA em \"FOTO2 FACHADA LATERAL TETOS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F4 ANULADA em \"FOTO3 FACHADA VENTANAS1\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F4 ANULADA em \"FOTO1 FACHADA VENTANAS\\TERRAÇO\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F5 ANULADA em \"FOTO1 FACHADA VENTANAS\\TERRAÇO\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F6 ANULADA em \"FOTO1 FACHADA VENTANAS\\TERRAÇO\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F4 ANULADA em \"Fachada lateral 1 (B)\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F5 ANULADA em \"Fachada lateral 1 (B)\""}, {"ts": "2026-06-16 08:27", "txt": "Fase F6 ANULADA em \"Fachada lateral 1 (B)\""}, {"ts": "2026-06-16 08:25", "txt": "Encargos sobre salários 0% → 18.5%"}, {"ts": "2026-06-16 08:24", "txt": "Tarifa 2 F1 0,00 → 12,00 € · Tarifa 2 F2 0,00 → 12,00 € · Tarifa 2 F3 0,00 → 6,00 € · Tarifa 2 HORAS 0,00 → 20,00 € · Tarifa 2 retenção 0% → 5%"}, {"ts": "2026-06-16 08:23", "txt": "Sincronização da app Funcionários (2026-06-16 08:23): 69 zonas novas · 39 fases atualizadas · 103 anulações · 0 horas · 0 meses de salários"}, {"ts": "2026-06-14 20:00", "txt": "App CONSTRÓII.ES — 6 fases editáveis"}]}}, {"id": "obra1781697152865", "nome": "SEGOVIA_2_RESIDENCIA_EST", "db": {"config": {"obra": "SEGOVIA_2_RESIDENCIA_EST", "cliente": "GRUPO GARCIA S.L.", "orcamento": 0, "fases": [{"id": "F1", "nome": "EPS", "cor": "#e8650d"}, {"id": "F2", "nome": "BARRAMENTO", "cor": "#1f7a4d"}, {"id": "F3", "nome": "PINTURA", "cor": "#3d5a99"}, {"id": "F4", "nome": "FAZER JUNTAS", "cor": "#9b287b", "ativa": false}, {"id": "F5", "nome": "TINTAR", "cor": "#0e7c7b", "ativa": false}, {"id": "F6", "nome": "CAPOTO", "cor": "#b8860b", "ativa": false}], "tarifas": [{"ate": "", "precos": {"F1": 12, "F2": 12, "F3": 6, "F4": 0, "F5": 0, "F6": 0, "HORAS": 20}, "ret": 5}], "encargosPct": 18.5}, "zones": [{"id": 2, "desc": "Fachada lateral 1", "comp": 120, "alt": 1, "area": 120, "dataAuto": "2026-06-11", "fases": {"F1": {"mes": "2026-06"}, "F2": null, "F3": null}}], "extras": [], "custos": [{"id": 1, "mes": "2026-06", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 827.4, "valor": 980.47, "data": "", "auto": true}], "certs": [], "nextZoneId": 3, "nextExtraId": 1, "nextCustoId": 2, "nextCertId": 1, "histCfg": [{"ts": "2026-06-18 13:08", "txt": "Sincronização da app Funcionários (2026-06-18 13:08): 1 zonas novas · 1 fases atualizadas · 0 anulações · 0 horas · 0 meses de salários"}, {"ts": "2026-06-17 15:13", "txt": "Encargos sobre salários 0% → 18.5%"}, {"ts": "2026-06-17 15:10", "txt": "Tarifa 2 F1 0,00 → 12,00 € · Tarifa 2 F2 0,00 → 12,00 € · Tarifa 2 F3 0,00 → 6,00 € · Tarifa 2 HORAS 0,00 → 20,00 € · Tarifa 2 retenção 0% → 5%"}, {"ts": "2026-06-17 15:09", "txt": "Sincronização da app Funcionários (2026-06-17 15:09): 1 zonas novas · 1 fases atualizadas · 0 anulações · 0 horas · 1 meses de salários"}, {"ts": "2026-06-14 20:00", "txt": "App CONSTRÓII.ES — 6 fases editáveis"}]}}, {"id": "obra1781884903355", "nome": "SEGOVIA_0_0_ALBERTO", "db": {"config": {"obra": "SEGOVIA_0_ALBERTO", "cliente": "ALBERTO", "orcamento": 0, "fases": [{"id": "F1", "nome": "EPS", "cor": "#E8650D"}, {"id": "F2", "nome": "BARRAMENTO", "cor": "#1F7A4D"}, {"id": "F3", "nome": "PINTURA", "cor": "#3D5A99"}, {"id": "F4", "nome": "FASE 4", "cor": "#9B287B", "ativa": false}, {"id": "F5", "nome": "FASE 5", "cor": "#0E7C7B", "ativa": false}, {"id": "F6", "nome": "FASE 6", "cor": "#B8860B", "ativa": false}], "tarifas": [{"ate": "", "precos": {"F1": 10.8, "F2": 10.8, "F3": 5.4, "F4": 0, "F5": 0, "F6": 0, "HORAS": 18.5}, "ret": 0}], "encargosPct": 18.5}, "zones": [{"id": 1, "desc": "FACHADA LATERAL 1", "comp": 24.75, "alt": 9.38, "area": 232.16, "dataAuto": "2025-10-31", "fases": {"F1": {"mes": "2025-10"}, "F2": {"mes": "2025-10"}, "F3": {"mes": "2026-03"}}}, {"id": 2, "desc": "FACHADA LATERAL 1", "comp": 14.45, "alt": 2.88, "area": 41.62, "dataAuto": "2025-10-31", "fases": {"F1": {"mes": "2025-10"}, "F2": {"mes": "2025-10"}, "F3": {"anulada": true}}}, {"id": 3, "desc": "FACHADA LATERAL 1 S", "comp": 14.45, "alt": 9.5, "area": 137.28, "dataAuto": "2025-10-31", "fases": {"F1": {"mes": "2025-10"}, "F2": {"mes": "2025-10"}, "F3": {"mes": "2026-03"}}}, {"id": 4, "desc": "FACHADA LATERAL 1 TETO", "comp": 14.75, "alt": 0.77, "area": 11.36, "dataAuto": "2025-10-31", "fases": {"F1": {"mes": "2025-10"}, "F2": {"mes": "2025-10"}, "F3": {"mes": "2026-03"}}}, {"id": 5, "desc": "FACHADA VENTANAS\\TERRAÇO", "comp": 1, "alt": 53.2, "area": 53.2, "dataAuto": "2025-11-30", "fases": {"F1": {"mes": "2025-11"}, "F2": {"mes": "2025-11"}, "F3": {"anulada": true}}}, {"id": 6, "desc": "FACHADA VENTANAS1", "comp": 1, "alt": 209.54, "area": 209.54, "dataAuto": "2025-11-30", "fases": {"F1": {"mes": "2025-11"}, "F2": {"mes": "2025-11"}, "F3": {"anulada": true}}}, {"id": 7, "desc": "FACHADA LATERAL TETOS1", "comp": 1, "alt": 125, "area": 125, "dataAuto": "2025-11-30", "fases": {"F1": {"mes": "2025-11"}, "F2": {"mes": "2025-11"}, "F3": {"anulada": true}}}, {"id": 8, "desc": "FACHADA LATERAL TETOS2", "comp": 1, "alt": 125, "area": 125, "dataAuto": "2025-11-30", "fases": {"F1": {"mes": "2025-11"}, "F2": {"mes": "2025-12"}, "F3": {"anulada": true}}}, {"id": 9, "desc": "FACHADA BIBLIOTECA", "comp": 1, "alt": 477.65, "area": 477.65, "dataAuto": "2025-11-30", "fases": {"F1": {"mes": "2025-11"}, "F2": {"mes": "2025-11"}, "F3": {"mes": "2026-04"}}}, {"id": 10, "desc": "TERRAÇO BILIOTECA + LATERAL", "comp": 34.05, "alt": 3.4, "area": 115.77, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-04"}}}, {"id": 11, "desc": "FACHADA TERRAÇO LATERAL", "comp": 16.78, "alt": 3.4, "area": 57.05, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"anulada": true}}}, {"id": 12, "desc": "FACHADA LATERAL 2", "comp": 16.68, "alt": 9.4, "area": 156.79, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-03"}}}, {"id": 13, "desc": "FACHADA LATERAL INTERIOR", "comp": 16.9, "alt": 13.1, "area": 221.39, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-03"}}}, {"id": 14, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 7.75, "alt": 1.85, "area": 43.01, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-03"}}}, {"id": 15, "desc": "FACHADA LATERAL INTERIOR TETO", "comp": 6.4, "alt": 1.85, "area": 35.52, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-03"}}}, {"id": 16, "desc": "FACHADA LATERAL INTERIOR FUNDO", "comp": 1.8, "alt": 4.4, "area": 15.84, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"anulada": true}}}, {"id": 17, "desc": "FOTO1 FEVEREIRO 1", "comp": 25.96, "alt": 10.8, "area": 280.37, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 18, "desc": "FOTO1 FEVEREIRO 2", "comp": 1.77, "alt": 0.87, "area": 1.54, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 19, "desc": "FOTO1 FEVEREIRO 3", "comp": 0.87, "alt": 12.65, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 20, "desc": "FOTO1 FEVEREIRO 4", "comp": 0.87, "alt": 12.65, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 21, "desc": "FOTO1 FEVEREIRO 5", "comp": 0.87, "alt": 12.65, "area": 11.01, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 22, "desc": "FOTO2 FEVEREIRO 1", "comp": 1.38, "alt": 1.77, "area": 2.44, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 23, "desc": "FOTO2 FEVEREIRO 2", "comp": 11.75, "alt": 7.8, "area": 91.65, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 24, "desc": "FOTO2 FEVEREIRO 3", "comp": 6.5, "alt": 6.6, "area": 42.9, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 25, "desc": "FOTO2 FEVEREIRO 4", "comp": 0.8, "alt": 7.8, "area": 6.24, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 26, "desc": "FOTO2 FEVEREIRO 5", "comp": 4.15, "alt": 12.1, "area": 50.22, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 27, "desc": "FOTO2 FEVEREIRO 6", "comp": 4.15, "alt": 12.2, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 28, "desc": "FOTO2 FEVEREIRO 7", "comp": 4.15, "alt": 12.2, "area": 50.63, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 29, "desc": "FOTO2 FEVEREIRO 8", "comp": 16.68, "alt": 7.8, "area": 130.1, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"anulada": true}}}, {"id": 30, "desc": "FOTO3 FEVEREIRO 1", "comp": 1.95, "alt": 6.1, "area": 11.9, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 31, "desc": "FOTO3 FEVEREIRO 2", "comp": 1.95, "alt": 4.2, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 32, "desc": "FOTO3 FEVEREIRO 3", "comp": 1.95, "alt": 4.2, "area": 8.19, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 33, "desc": "FOTO3 FEVEREIRO 4", "comp": 6.1, "alt": 17.8, "area": 108.58, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 34, "desc": "FOTO4 FEVEREIRO 1", "comp": 3.7, "alt": 22.1, "area": 81.77, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 35, "desc": "FOTO4 FEVEREIRO 2", "comp": 3.7, "alt": 15.75, "area": 58.28, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-03"}}}, {"id": 36, "desc": "FOTO4 FEVEREIRO 3", "comp": 2.1, "alt": 11, "area": 23.1, "dataAuto": "2026-02-28", "fases": {"F1": {"mes": "2026-02"}, "F2": {"mes": "2026-02"}, "F3": {"mes": "2026-04"}}}, {"id": 37, "desc": "FOTO1 MARÇO", "comp": 15.65, "alt": 28, "area": 438.2, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"mes": "2026-04"}}}, {"id": 38, "desc": "FOTO1 MARÇO", "comp": 8.3, "alt": 12.6, "area": 104.58, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-04"}, "F3": {"anulada": true}}}, {"id": 39, "desc": "FOTO1 MARÇO", "comp": 3.55, "alt": 11, "area": 39.05, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 40, "desc": "FOTO2 MARÇO", "comp": 1.7, "alt": 3.45, "area": 5.87, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"mes": "2026-04"}}}, {"id": 41, "desc": "FOTO2 MARÇO", "comp": 3, "alt": 3.45, "area": 10.35, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"mes": "2026-04"}}}, {"id": 42, "desc": "FOTO2 MARÇO", "comp": 24.3, "alt": 3.45, "area": 83.84, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 43, "desc": "FOTO2 MARÇO", "comp": 1, "alt": 8.7, "area": 8.7, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 44, "desc": "FOTO2 MARÇO", "comp": 2.7, "alt": 2.55, "area": 6.89, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 45, "desc": "FOTO2 MARÇO", "comp": 1.8, "alt": 2.55, "area": 4.59, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 46, "desc": "FOTO2 MARÇO", "comp": 2.7, "alt": 1.8, "area": 4.86, "dataAuto": "2026-03-31", "fases": {"F1": {"mes": "2026-03"}, "F2": {"mes": "2026-03"}, "F3": {"anulada": true}}}, {"id": 47, "desc": "FOTO1 ABRIL", "comp": 1, "alt": 221.79, "area": 221.79, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-04"}, "F2": {"anulada": true}, "F3": {"anulada": true}}}, {"id": 48, "desc": "FOTO 4 ABRIL", "comp": 144.62, "alt": 1, "area": 144.62, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-04"}, "F2": {"anulada": true}, "F3": {"anulada": true}}}, {"id": 49, "desc": "FOTO 6 ABRIL", "comp": 1, "alt": 179.38, "area": 179.38, "dataAuto": "2026-04-30", "fases": {"F1": {"mes": "2026-04"}, "F2": {"anulada": true}, "F3": {"anulada": true}}}, {"id": 51, "desc": "F qC y T . SEGOVIA (INT)", "comp": 1, "alt": 138.62, "area": 138.62, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-04"}}}, {"id": 52, "desc": "TEO INT. TERRAZA", "comp": 37.57, "alt": 1, "area": 37.57, "dataAuto": "2025-12-31", "fases": {"F1": {"mes": "2025-12"}, "F2": {"mes": "2025-12"}, "F3": {"mes": "2026-04"}}}, {"id": 53, "desc": "FOTO 5 ABRIL", "comp": 745.26, "alt": 1, "area": 745.26, "dataAuto": "2026-04-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}}}, {"id": 54, "desc": "FOTO 2 ABRIL", "comp": 460.22, "alt": 1, "area": 460.22, "dataAuto": "2026-04-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}}}, {"id": 55, "desc": "FOTO 3 ABRIL", "comp": 140.41, "alt": 1, "area": 140.41, "dataAuto": "2026-04-30", "fases": {"F1": {"anulada": true}, "F2": {"anulada": true}, "F3": {"anulada": true}}}], "extras": [{"id": 1, "desc": "HORAS OUTUBRO", "area": 8, "mes": "2025-10"}, {"id": 2, "desc": "HORAS MARÇO", "area": 27, "mes": "2026-03"}], "custos": [{"id": 1, "mes": "2025-10", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 5123.12, "valor": 6070.9, "data": "", "auto": true}, {"id": 2, "mes": "2025-11", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 11085.21, "valor": 13135.97, "data": "", "auto": true}, {"id": 3, "mes": "2025-12", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 10440.76, "valor": 12372.3, "data": "", "auto": true}, {"id": 4, "mes": "2026-01", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 0.14, "valor": 0.17, "data": "", "auto": true}, {"id": 5, "mes": "2026-02", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 12352.35, "valor": 14637.53, "data": "", "auto": true}, {"id": 6, "mes": "2026-03", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 12639.7, "valor": 14978.04, "data": "", "auto": true}, {"id": 7, "mes": "2026-04", "cat": "SALARIOS", "desc": "Salários equipa + encargos 18.5% (sincronizado)", "valorBase": 9886.88, "valor": 11715.95, "data": "", "auto": true}, {"id": 8, "mes": "2025-10", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 9, "mes": "2025-11", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 10, "mes": "2025-12", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 11, "mes": "2026-01", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 12, "mes": "2026-02", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 13, "mes": "2026-03", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 14, "mes": "2026-04", "cat": "ALOJAMENTO", "desc": "RENDA APARTAMENTO SEGOVIA (renda fixa)", "valor": 0.01, "data": ""}, {"id": 15, "mes": "2025-10", "cat": "TRANSPORTES", "desc": "ViagensPT-Segovia (2 viagens × 600,00km × 0,40 € + 70,00 € extras)", "valor": 550, "data": ""}, {"id": 16, "mes": "2026-04", "cat": "EQUIPAMENTO", "desc": "varios", "valor": 500, "data": "2026-04-30"}], "certs": [{"id": 1, "mes": "2025-10", "num": "FAT_OUTUBRO", "base": 9018.47, "recebido": 9018.47, "data": "2025-10-31", "nota": ""}, {"id": 2, "mes": "2025-11", "num": "FAT_NOVEMBRO", "base": 21319.98, "recebido": 21319.98, "data": "2025-11-30", "nota": ""}, {"id": 3, "mes": "2025-12", "num": "FAT_DEZEMBRO", "base": 14573.63, "recebido": 0, "data": "2025-12-31", "nota": ""}, {"id": 4, "mes": "2026-02", "num": "FAT_FEVEREIRO", "base": 21054.65, "recebido": 21054.65, "data": "2026-02-28", "nota": ""}, {"id": 5, "mes": "2026-03", "num": "FAT_MARÇO", "base": 22495.3, "recebido": 0, "data": "2026-03-31", "nota": ""}, {"id": 6, "mes": "2026-04", "num": "FAT_ABRIL", "base": 17923.65, "recebido": 17923.65, "data": "2026-04-30", "nota": ""}], "nextZoneId": 56, "nextExtraId": 3, "nextCustoId": 17, "nextCertId": 7, "histCfg": [{"ts": "2026-06-19 18:36", "txt": "Deslocações calculadas: 550,00 € (2025-10)"}, {"ts": "2026-06-19 18:34", "txt": "Alojamento renda fixa: 0,01 €/mês × 7 meses = 0,07 €"}, {"ts": "2026-06-19 17:06", "txt": "Tarifa 2 F1 0,00 → 10,80 € · Tarifa 2 F2 0,00 → 10,80 € · Tarifa 2 F3 0,00 → 5,40 € · Tarifa 2 HORAS 0,00 → 18,50 €"}, {"ts": "2026-06-19 17:04", "txt": "Sincronização da app Funcionários (2026-06-19 17:00): 55 zonas novas · 135 fases atualizadas · 30 anulações · 2 horas · 7 meses de salários"}, {"ts": "2026-06-19 17:04", "txt": "Encargos sobre salários 0% → 18.5%"}, {"ts": "2026-06-19 17:03", "txt": "Tarifa 1 F1 0,00 → 10,80 € · Tarifa 1 F2 0,00 → 10,80 € · Tarifa 1 F3 0,00 → 5,40 € · Tarifa 1 HORAS 0,00 → 18,50 € · Tarifa 2 F1 10,80 → 0,00 € · Tarifa 2 F2 10,80 → 0,00 € · Tarifa 2 F3 5,40 → 0,00 € · Tarifa 2 HORAS 18,50 → 0,00 €"}, {"ts": "2026-06-19 17:02", "txt": "Fase anulada: FASE 4"}, {"ts": "2026-06-19 17:02", "txt": "Fase anulada: FASE 5"}, {"ts": "2026-06-19 17:02", "txt": "Fase anulada: FASE 6"}, {"ts": "2026-06-14 20:00", "txt": "App CONSTRÓII.ES — 6 fases editáveis"}]}}], "ativa": "obra1", "ultimoBackup": "2026-06-18"};
+const KEY = 'constroii_es_empresa_v2';
+const KEY_MULTI = 'constroii_es_empresa_multi_v3';
+let DB = null;
+let STORE = null;
+function obraAtiva(){ return STORE.obras.find(o=>o.id===STORE.ativa) || STORE.obras[0]; }
+function autoMesFechadoMap(){ if(!DB.config.autoMesFechado) DB.config.autoMesFechado={}; return DB.config.autoMesFechado; }
+function novaObraDB(nome){ const d=JSON.parse(JSON.stringify(SEED)); d.config.obra=nome||''; return d; }
+function repararDB(db){
+  if(!db.config || !db.config.fases || !Array.isArray(db.config.fases) || !db.config.fases.length){
+    if(db.config){ db.config.fases = JSON.parse(JSON.stringify(SEED.config.fases)); }
+  }
+  db.config.fases.forEach((fa,i)=>{ const sd=SEED.config.fases[i];
+    if(!fa.nome || fa.nome===fa.id){ fa.nome = sd?sd.nome:('FASE '+(i+1)); }
+    if(!fa.cor){ fa.cor = sd?sd.cor:'#777'; } });
+  if(!db.histCfg) db.histCfg=[];
+  if(!db.custos) db.custos=[];
+  if(!db.certs) db.certs=[];
+  if(!db.zones) db.zones=[];
+  if(!db.extras) db.extras=[];
+  if(db.config.encargosPct==null) db.config.encargosPct=32;
+  db.custos.forEach(x=>{ if(x.cat==='SALARIOS'&&x.valorBase==null){ x.valorBase=x.valor; x.valor=Math.round(x.valorBase*(1+db.config.encargosPct/100)*100)/100; } });
+  // limpar custos de teste: valor < 1€ (apanha 0,01€ de alojamento, 0,17€ de salário, etc.)
+  // (avalia o valor base nos salários, para não apagar um salário real por causa dos encargos)
+  db.custos = db.custos.filter(x=>{ const v = (x.cat==='SALARIOS' && x.valorBase!=null) ? x.valorBase : x.valor; return !(Math.abs(v)<1); });
+  if(!db.nextCustoId) db.nextCustoId=(db.custos.reduce((a,x)=>Math.max(a,x.id),0))+1;
+  // CONVERSÃO de obras antigas (Segóvia): zonas e tarifas com fases por NOME → ids
+  const idsAtuais=db.config.fases.map(f=>f.id);
+  const nomesAntigos=['EPS','BARRAMENTO','PINTURA'];
+  const usaNomesAntigos = (db.zones||[]).some(z=>z.fases && nomesAntigos.some(n=>z.fases[n]!==undefined) && !idsAtuais.some(id=>z.fases[id]!==undefined));
+  if(usaNomesAntigos){
+    const mapa={EPS:'F1',BARRAMENTO:'F2',PINTURA:'F3'};
+    db.zones.forEach(z=>{ if(!z.fases) return; const nova={}; idsAtuais.forEach(id=>nova[id]=null); Object.keys(z.fases).forEach(k=>{ const id=mapa[k]||k; if(idsAtuais.includes(id)) nova[id]=z.fases[k]; }); z.fases=nova; });
+    // tarifas: precos por nome → id
+    (db.config.tarifas||[]).forEach(t=>{ if(!t.precos) return; const np={}; Object.keys(t.precos).forEach(k=>{ const id=mapa[k]||k; np[id]=t.precos[k]; }); t.precos=np; });
+  }
+  return db;
+}
+function fasesCfg(){ return (DB.config.fases&&DB.config.fases.length)? DB.config.fases : [{id:'F1',nome:'EPS',cor:'#E8650D'},{id:'F2',nome:'BARRAMENTO',cor:'#1F7A4D'},{id:'F3',nome:'PINTURA',cor:'#3D5A99'}]; }
+function fasesIds(){ return fasesCfg().filter(f=>f.ativa!==false).map(f=>f.id); }
+function faseTemTrabalho(id){ return (DB.zones||[]).some(z=>z.fases&&z.fases[id]&&(z.fases[id].mes||z.fases[id].anulada)); }
+function faseNome(id){ const f=fasesCfg().find(x=>x.id===id); return f?f.nome:id; }
+function faseCor(id){ const f=fasesCfg().find(x=>x.id===id); return f?f.cor:'#777'; }
+Object.defineProperty(window,'FASES',{get:()=>fasesIds()});
+function tagFase(id,txt){ const nome=txt!=null?txt:faseNome(id); const cor=faseCor(id); return `<span class="tagF" style="background:${cor}22;color:${cor};font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px;white-space:nowrap">${nome}</span>`; }
+const MESES_PT = {'01':'Janeiro','02':'Fevereiro','03':'Março','04':'Abril','05':'Maio','06':'Junho','07':'Julho','08':'Agosto','09':'Setembro','10':'Outubro','11':'Novembro','12':'Dezembro'};
+const fmtEur = v => (v||0).toLocaleString('pt-PT',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const fmtN = v => (v||0).toLocaleString('pt-PT',{minimumFractionDigits:2,maximumFractionDigits:2});
+const mesLbl = m => { const [a,n]=m.split('-'); return MESES_PT[n]+' '+a; };
+let tab='todas', filtroMes='', filtroFase='', editId=null, histAberto=false;
+
+const store={
+  async get(k){
+    try{ if(window.storage&&window.storage.get){ const r=await window.storage.get(k); if(r&&r.value) return r.value; } }catch(e){}
+    try{ const v=localStorage.getItem(k); if(v) return v; }catch(e){}
+    return null;
+  },
+  async set(k,v){
+    let ok=false;
+    try{ if(window.storage&&window.storage.set){ await window.storage.set(k,v); ok=true; } }catch(e){}
+    try{ localStorage.setItem(k,v); ok=true; }catch(e){}
+    return ok;
+  }
+};
+async function load(){
+  try{ const v=await store.get(KEY_MULTI); if(v){ STORE=JSON.parse(v); } }catch(e){}
+  if(!STORE || !STORE.obras || !STORE.obras.length){
+    let antiga=null;
+    try{ const v=await store.get(KEY); if(v) antiga=JSON.parse(v); }catch(e){}
+    if(antiga){ STORE={obras:[{id:'obra1', nome:(antiga.config&&antiga.config.obra)||'Obra 1', db:repararDB(antiga)}], ativa:'obra1'}; }
+    else { STORE = JSON.parse(JSON.stringify(STORE_INICIAL)); }
+  }
+  STORE.obras.forEach(o=>{ o.db=repararDB(o.db); if(!o.nome) o.nome=(o.db.config&&o.db.config.obra)||'Obra'; });
+  if(!STORE.ativa || !STORE.obras.find(o=>o.id===STORE.ativa)) STORE.ativa=STORE.obras[0].id;
+  DB=obraAtiva().db;
+  try{ save(); render(); }
+  catch(e){ console.error('render falhou', e); DB=novaObraDB('Obra 1'); STORE={obras:[{id:'obra1',nome:'Obra 1',db:DB}],ativa:'obra1'}; save(); render(); }
+}
+function trocarObra(id){ if(!STORE.obras.find(o=>o.id===id))return; STORE.ativa=id; DB=obraAtiva().db; tab='geral'; save(); render(); }
+function criarObra(nome){ const id='obra'+Date.now(); STORE.obras.push({id,nome:nome||'Nova obra',db:novaObraDB(nome)}); STORE.ativa=id; DB=obraAtiva().db; tab='cfgfat'; save(); render(); }
+function duplicarObra(id){ const o=STORE.obras.find(x=>x.id===id); if(!o)return; const nid='obra'+Date.now(); const cp=JSON.parse(JSON.stringify(o.db)); cp.zones=[]; cp.extras=[]; cp.custos=[]; cp.certs=[]; STORE.obras.push({id:nid,nome:o.nome+' (cópia)',db:cp}); STORE.ativa=nid; DB=obraAtiva().db; tab='cfgfat'; save(); render(); }
+function duplicarObraTudo(id){ const o=STORE.obras.find(x=>x.id===id); if(!o)return; const nid='obra'+Date.now(); const cp=JSON.parse(JSON.stringify(o.db)); STORE.obras.push({id:nid,nome:o.nome+' (cópia)',db:cp}); STORE.ativa=nid; DB=obraAtiva().db; tab='geral'; save(); render(); }
+function apagarObra(id){ if(STORE.obras.length<=1){ alert('Não podes apagar a única obra. Cria outra primeiro.'); return; } STORE.obras=STORE.obras.filter(o=>o.id!==id); if(STORE.ativa===id) STORE.ativa=STORE.obras[0].id; DB=obraAtiva().db; save(); render(); }
+function renomearObra(id,nome){ const o=STORE.obras.find(x=>x.id===id); if(o){ o.nome=nome; if(o.db.config) o.db.config.obra=nome; save(); render(); } }
+let saveT=null;
+function save(){
+  clearTimeout(saveT);
+  saveT=setTimeout(async()=>{
+    const t=document.getElementById('saveToast');
+    let ok=false;
+    try{ ok=await store.set(KEY_MULTI, JSON.stringify(STORE)); }catch(e){ console.error('storage',e); }
+    if(ok){ t.textContent='✓ Guardado'; t.style.background='var(--verde)'; }
+    else{ t.textContent='⚠ NÃO GUARDADO — exporta uma cópia de segurança!'; t.style.background='var(--verm)'; }
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), ok?1200:4000);
+  },300);
+}
+function agora(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function hojeData(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function diasDesde(data){ if(!data) return null; const d=new Date(data+'T00:00:00'), h=new Date(hojeData()+'T00:00:00'); return Math.round((h-d)/86400000); }
+function avisoBackup(){
+  const d=diasDesde(STORE.ultimoBackup);
+  if(d===null) return `<div class="avisoBk" style="background:#FFF4E5;border:1px solid #F0C36D;color:#8a6d3b;padding:8px 12px;border-radius:8px;margin-bottom:12px;font-size:13px">⚠ Ainda não exportaste nenhuma cópia de segurança. Os dados estão só neste navegador — vai a <b>Configuração → ⬇ Exportar cópia de segurança</b>.</div>`;
+  if(d>=7) return `<div class="avisoBk" style="background:#FDECEA;border:1px solid #F1A9A0;color:#a33;padding:8px 12px;border-radius:8px;margin-bottom:12px;font-size:13px">⚠ Última cópia de segurança há <b>${d} dias</b> (${STORE.ultimoBackup}). Convém exportar de novo em <b>Configuração</b>.</div>`;
+  return '';
+}
+function registaCfg(txt){ DB.histCfg.unshift({ts:agora(),txt}); }
+function hoje(){ const d=new Date(),p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+
+function mesAtual(){ const d=new Date(),p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1); }
+function mesesAtivos(){
+  const s=new Set();
+  DB.zones.forEach(z=>FASES.forEach(f=>{ if(z.fases[f]&&z.fases[f].mes) s.add(z.fases[f].mes); }));
+  DB.extras.forEach(e=>s.add(e.mes));
+  DB.certs.forEach(c=>s.add(c.mes));
+  (DB.custos||[]).forEach(x=>s.add(x.mes));
+  return [...s].sort();
+}
+function tarifaDoMes(mes){
+  const ts=DB.config.tarifas;
+  for(const t of ts){ if(t.ate && mes<=t.ate) return t; }
+  return ts[ts.length-1];
+}
+function tarifaAtual(){ return DB.config.tarifas[DB.config.tarifas.length-1]; }
+function retExtraMes(mes){
+  const re=DB.config.retExtra||{};
+  const r=re[mes];
+  return r&&r.valor>0 ? {valor:r.valor, nota:r.nota||''} : null;
+}
+function faturavelMes(mes){
+  const t=tarifaDoMes(mes); const cp=t.precos;
+  const out={}; FASES.forEach(f=>out[f]={m2:0,v:0}); out.HORAS={m2:0,v:0};
+  DB.zones.forEach(z=>{ if(z.anulada) return; FASES.forEach(f=>{
+    const fd=z.fases[f];
+    if(fd&&fd.mes===mes){ out[f].m2+=z.area; out[f].v+=z.area*(cp[f]||0); }
+  }); });
+  DB.extras.forEach(e=>{ if(e.mes===mes){ const ph=(e.preco!=null?e.preco:(cp.HORAS||0)); out.HORAS.m2+=e.area; out.HORAS.v+=e.area*ph; } });
+  out.base=FASES.reduce((a,f)=>a+out[f].v,0)+out.HORAS.v;
+  out.retPct=t.ret; out.ret=out.base*t.ret/100;
+  const re=retExtraMes(mes);
+  out.retExtra = re ? re.valor : 0;
+  out.retExtraNota = re ? re.nota : '';
+  out.liquido=out.base-out.ret-out.retExtra;
+  return out;
+}
+const CATS=['SALARIOS','ALOJAMENTO','TRANSPORTES','EQUIPAMENTO','OUTROS'];
+const CATLBL={SALARIOS:'Salários',ALOJAMENTO:'Alojamento',TRANSPORTES:'Transportes',EQUIPAMENTO:'Equipamento',OUTROS:'Outros'};
+function recalcSalarios(){
+  const p=DB.config.encargosPct||0;
+  DB.custos.forEach(x=>{ if(x.cat==='SALARIOS'&&x.valorBase!=null){ x.valor=Math.round(x.valorBase*(1+p/100)*100)/100; if(x.auto)x.desc='Salários equipa + encargos '+p+'% (sincronizado)'; } });
+}
+function custosMes(mes){ return DB.custos.filter(x=>x.mes===mes).reduce((a,x)=>a+x.valor,0); }
+function zonaFaturado(z){ if(z.anulada) return 0; return FASES.reduce((a,f)=>a+(z.fases[f]&&z.fases[f].mes? z.area*(tarifaDoMes(z.fases[f].mes).precos[f]||0):0),0); }
+function zonaPendente(z){ if(z.anulada) return 0; const cp=tarifaAtual().precos; return FASES.reduce((a,f)=>a+((!z.fases[f]||(!z.fases[f].mes&&!z.fases[f].anulada))? z.area*(cp[f]||0):0),0); }
+function valorContratoAuto(){
+  // valor total do contrato = faturável executado + pendente + horas avulsas, aos preços do cliente
+  const tZonas=DB.zones.reduce((a,z)=>a+zonaFaturado(z)+zonaPendente(z),0);
+  const tHoras=(DB.extras||[]).reduce((a,e)=>a+e.area*(e.preco!=null?e.preco:(tarifaAtual().precos.HORAS||0)),0);
+  return Math.round((tZonas+tHoras)*100)/100;
+}
+
+async function guardarJa(){
+  const t=document.getElementById('saveToast');
+  let ok=false;
+  try{ ok=await store.set(KEY_MULTI, JSON.stringify(STORE)); }catch(e){}
+  if(ok){ t.textContent='✓ Tudo guardado'; t.style.background='var(--verde)'; }
+  else{ t.textContent='⚠ NÃO guardou — exporta uma cópia de segurança!'; t.style.background='var(--verm)'; }
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), ok?1600:5000);
+}
+function render(){
+  const _scrollY = window.__irAoTopo ? 0 : window.scrollY;
+  const _tl = document.getElementById('tlockAuto');
+  const _tlScroll = (_tl && !window.__irAoTopo) ? _tl.scrollTop : 0;
+  window.__irAoTopo = false;
+  const sel=document.getElementById('selObra');
+  if(sel){ sel.innerHTML=STORE.obras.map(o=>`<option value="${o.id}" ${o.id===STORE.ativa?'selected':''}>${o.nome||'(sem nome)'}</option>`).join(''); }
+  const navOb=document.getElementById('navObras');
+  if(navOb){ navOb.innerHTML=STORE.obras.map(o=>{ const ativa=o.id===STORE.ativa&&tab!=='todas'; const concl=!!(o.db&&o.db.config&&o.db.config.concluida); return `<button data-abrirobra="${o.id}" title="${concl?'Obra concluída · ':''}${ativa?'Obra selecionada':'Abrir '+o.nome}" style="background:${ativa?'var(--laranja-esc)':'#2B353D'};color:${ativa?'#fff':'#B9C2C9'};border:none;padding:${ativa?'6px 14px':'5px 10px'};font-size:${ativa?'13px':'11px'};font-weight:${ativa?'800':'600'};cursor:pointer;border-radius:6px;white-space:nowrap;${ativa?'box-shadow:0 1px 4px rgba(0,0,0,.25)':'opacity:.85'}">${ativa?'✓ ':''}${concl?'🏁 ':''}${o.nome||'(sem nome)'}</button>`; }).join(''); }
+  document.getElementById('hObra').textContent = DB.config.cliente ? ('Cliente: '+DB.config.cliente) : '';
+  const hT=document.getElementById('hTitulo');
+  if(hT){
+    if(!window.__marca){ const parts=hT.innerHTML.split(' · '); window.__marca = parts[0]; }
+    const obra = (DB.config.obra||'').trim();
+    hT.innerHTML = window.__marca + ' · ' + (obra? obra+' · ' : '') + 'EMPRESA';
+  }
+  document.title = 'Constróii Empresa · ' + DB.config.obra;
+  let pct, lblBarra;
+  if(tab==='todas'){
+    // somar faturável, contrato e caixa (recebido − custos) de todas as obras
+    const _db=DB; let tFat=0,tContrato=0,tReceb=0,tCus=0;
+    STORE.obras.forEach(o=>{ DB=o.db;
+      let fatObra=0; mesesAtivos().forEach(m=>{fatObra+=faturavelMes(m).base;});
+      tFat+=fatObra;
+      tContrato+=valorContratoAuto();
+      tReceb+=DB.certs.reduce((a,c)=>a+(c.recebido||0),0);
+      const cusDir=DB.custos.reduce((a,x)=>a+(x.valor||0),0);
+      const cusInd=Math.round(fatObra*(DB.config.indiretosPct||0)/100*100)/100;
+      tCus+=cusDir+cusInd;
+    });
+    DB=_db;
+    const caixa=tReceb-tCus;
+    pct = tContrato? Math.min(100, tFat/tContrato*100) : 0;
+    lblBarra = `TODAS AS OBRAS · ${fmtN(pct)}% faturado · Caixa ${fmtEur(caixa)}`;
+  } else {
+    const meses=mesesAtivos();
+    let fatur=0; meses.forEach(m=>{fatur+=faturavelMes(m).base;});
+    const orc=valorContratoAuto();
+    pct = orc? Math.min(100,fatur/orc*100) : 0;
+    lblBarra = DB.config.obra || '(sem nome)';
+  }
+  document.getElementById('gFill').style.width=pct+'%';
+  document.getElementById('gLbl').textContent = lblBarra;
+  const m=document.getElementById('main');
+  const bk=avisoBackup();
+  if(tab==='geral') m.innerHTML=bk+rGeral();
+  if(tab==='todas') m.innerHTML=bk+rTodas();
+  if(tab==='auto') m.innerHTML=bk+rAuto();
+  if(tab==='m2') m.innerHTML=bk+rM2();
+  if(tab==='resfat') m.innerHTML=bk+rResumo()+rFat();
+  if(tab==='rescus') m.innerHTML=bk+rCustos();
+  if(tab==='cfgfat') m.innerHTML=bk+rCfgFat();
+  if(tab==='cfgcus') m.innerHTML=bk+rCfgCus();
+  if(tab==='dados') m.innerHTML=bk+rDados();
+  if(tab==='arq'){ m.innerHTML=bk+rArq(); listarArq(); }
+  bind();
+  if(window.__irAoTopo2){ window.__irAoTopo2=false; window.scrollTo(0,0); }
+  else {
+    requestAnimationFrame(()=>{
+      window.scrollTo(0, _scrollY);
+      const tl=document.getElementById('tlockAuto');
+      if(tl && _tlScroll) tl.scrollTop=_tlScroll;
+    });
+  }
+}
+
+function rTodas(){
+  const _dbAtual=DB; // guardar para repor no fim
+  const linhas=[];
+  let T={fat:0,liq:0,pend:0,receb:0,cert:0,ret:0,cus:0,contrato:0};
+  STORE.obras.forEach(o=>{
+    DB=o.db; // trocar contexto para esta obra (funções de cálculo usam DB global)
+    let fat=0,liq=0,retG=0; mesesAtivos().forEach(m=>{ const f=faturavelMes(m); fat+=f.base; liq+=f.liquido; retG+=f.ret; });
+    const pend=DB.zones.reduce((a,z)=>a+zonaPendente(z),0);
+    const receb=DB.certs.reduce((a,c)=>a+(c.recebido||0),0);
+    const cert=DB.certs.reduce((a,c)=>a+(c.base||0),0);
+    const cusDir=DB.custos.reduce((a,x)=>a+(x.valor||0),0);
+    const cusInd=Math.round(fat*(DB.config.indiretosPct||0)/100*100)/100;
+    const cus=cusDir+cusInd;
+    const contrato=valorContratoAuto();
+    const ret=retG;
+    linhas.push({nome:o.nome, fat, liq, pend, receb, cert, cus, contrato, margem:fat-cus, falta:liq-receb});
+    T.fat+=fat; T.liq+=liq; T.pend+=pend; T.receb+=receb; T.cert+=cert; T.ret+=ret; T.cus+=cus; T.contrato+=contrato;
+  });
+  DB=_dbAtual; // repor obra ativa
+  const margemTot=T.fat-T.cus, faltaReceberTot=T.liq-T.receb, caixaTot=T.receb-T.cus;
+
+  let html=`<div class="big"><div class="titulo">Todas as obras — totais somados (${STORE.obras.length} obras)</div>
+    <div style="background:${caixaTot>=0?'var(--verde)':'var(--verm)'};color:#fff;border-radius:10px;padding:16px 22px;margin:6px 0 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;opacity:.9">Caixa (recebido − custos)</div>
+        <div style="font-size:14px;opacity:.85;margin-top:2px">Recebido ${fmtEur(T.receb)} − Custos ${fmtEur(T.cus)}</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:34px;font-weight:800">${fmtEur(caixaTot)}</div>
+    </div>
+    <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+      <div class="card" style="border-left:4px solid var(--laranja)"><div class="k">Faturável executado</div><div class="v" style="font-size:24px;color:var(--laranja-esc)">${fmtEur(T.fat)}</div><div class="s">de todas as obras</div></div>
+      <div class="card" style="border-left:4px solid var(--ink2)"><div class="k">Por concluir</div><div class="v" style="font-size:24px">${fmtEur(T.pend)}</div><div class="s">à tarifa atual</div></div>
+      <div class="card" style="border-left:4px solid var(--verde)"><div class="k">Recebido</div><div class="v pos" style="font-size:24px">${fmtEur(T.receb)}</div><div class="s">certificado: ${fmtEur(T.cert)}</div></div>
+      <div class="card" style="border-left:4px solid ${faltaReceberTot>0.5?'var(--verm)':'var(--verde)'}"><div class="k">Por receber</div><div class="v ${faltaReceberTot>0.5?'neg':'pos'}" style="font-size:24px">${fmtEur(faltaReceberTot)}</div><div class="s">líquido − recebido</div></div>
+      <div class="card" style="border-left:4px solid ${margemTot>=0?'var(--verde)':'var(--verm)'}"><div class="k">Margem</div><div class="v ${margemTot>=0?'pos':'neg'}" style="font-size:24px">${fmtEur(margemTot)}</div><div class="s">− custos ${fmtEur(T.cus)}</div></div>
+    </div>
+    <div class="note" style="margin-top:8px">Retenção de garantia total (a recuperar): <b>${fmtEur(T.ret)}</b> · Valor de contrato (todos os autos): <b>${fmtEur(T.contrato)}</b></div>
+  </div>`;
+
+  html+=`<div class="big"><div class="titulo">Por obra</div>
+    <div class="scroll"><table style="font-size:12.5px">
+      <tr><th>Obra</th><th class="n">Contrato</th><th class="n">Faturável</th><th class="n">Por concluir</th><th class="n">Recebido</th><th class="n">Por receber</th><th class="n">Custos</th><th class="n">Margem</th></tr>
+      ${linhas.map(l=>`<tr>
+        <td><b>${l.nome}</b></td>
+        <td class="n">${fmtEur(l.contrato)}</td>
+        <td class="n" style="color:var(--laranja-esc)">${fmtEur(l.fat)}</td>
+        <td class="n">${fmtEur(l.pend)}</td>
+        <td class="n" style="color:var(--verde)">${fmtEur(l.receb)}</td>
+        <td class="n ${l.falta>0.5?'neg':''}">${fmtEur(l.falta)}</td>
+        <td class="n">${fmtEur(l.cus)}</td>
+        <td class="n ${l.margem>=0?'pos':'neg'}">${fmtEur(l.margem)}</td>
+      </tr>`).join('')}
+      <tr class="tot" style="font-weight:800;border-top:2px solid var(--linha)">
+        <td>TOTAL</td>
+        <td class="n">${fmtEur(T.contrato)}</td>
+        <td class="n">${fmtEur(T.fat)}</td>
+        <td class="n">${fmtEur(T.pend)}</td>
+        <td class="n">${fmtEur(T.receb)}</td>
+        <td class="n">${fmtEur(faltaReceberTot)}</td>
+        <td class="n">${fmtEur(T.cus)}</td>
+        <td class="n">${fmtEur(margemTot)}</td>
+      </tr>
+    </table></div>
+    <div class="note">Clica numa obra no seletor do topo para a abrires em detalhe.</div>
+  </div>`;
+  return html;
+}
+
+function rGeral(){
+  const meses=mesesAtivos();
+  let fatur=0, liq=0;
+  const mdata=meses.map(mes=>{
+    const f=faturavelMes(mes);
+    fatur+=f.base; liq+=f.liquido;
+    const certs=DB.certs.filter(c=>c.mes===mes);
+    return {mes, f, cus:custosMes(mes), receb:certs.reduce((a,c)=>a+c.recebido,0)};
+  }).filter(d=>d.f.base>0.01||d.cus>0.01||d.receb>0.01);
+  const totReceb=DB.certs.reduce((a,c)=>a+c.recebido,0);
+  const totCert=DB.certs.reduce((a,c)=>a+(c.base||0),0);
+  const pend=DB.zones.reduce((a,z)=>a+zonaPendente(z),0);
+  const totRet=mesesAtivos().reduce((a,m)=>a+faturavelMes(m).ret,0);
+  let totCusDir=0; const totCat={}; CATS.forEach(ct=>totCat[ct]=0);
+  DB.custos.forEach(x=>{ totCat[x.cat]+=x.valor; totCusDir+=x.valor; });
+  const indPct=DB.config.indiretosPct||0;
+  const custoIndireto=Math.round(fatur*indPct/100*100)/100;
+  const totCus=totCusDir+custoIndireto;
+  const margem=fatur-totCus;
+  const margemPct=fatur?(margem/fatur*100):0;
+  const faltaReceber=liq-totReceb;
+  const contrato=valorContratoAuto();
+  const pctExec=(fatur+pend)>0? fatur/(fatur+pend)*100 : 0;
+
+  // ===== 4 CARTÕES GRANDES — caixa · margem · falta receber · falta executar =====
+  const caixa=totReceb-totCus;
+  let html=`<div class="big"><div class="titulo">Obra</div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+      <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600">Nome da obra</div><div style="font-size:18px;font-weight:800">${DB.config.obra||'—'}</div></div>
+      <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600">Cliente</div><div style="font-size:18px;font-weight:800">${DB.config.cliente||'—'}</div></div>
+      <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600">Orçamento (= total do auto)</div><div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--laranja-esc)">${fmtEur(contrato)}</div></div>
+    </div>
+    <div class="note" style="margin-top:6px">O orçamento é calculado automaticamente: soma de todas as zonas do auto (concluído + pendente) mais as horas. Atualiza-se sozinho sempre que lanças ou alteras autos.</div>
+  </div>
+  <div style="background:${caixa>=0?'var(--verde)':'var(--verm)'};color:#fff;border-radius:10px;padding:16px 22px;margin:0 0 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>
+      <div style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;opacity:.9">Caixa (recebido − custos)</div>
+      <div style="font-size:14px;opacity:.85;margin-top:2px">Recebido ${fmtEur(totReceb)} − Custos ${fmtEur(totCus)}</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:34px;font-weight:800">${fmtEur(caixa)}</div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px">
+    <div class="card" style="border-left:4px solid var(--laranja)">
+      <div class="k">Faturável executado</div>
+      <div class="v" style="font-size:24px;color:var(--laranja-esc)">${fmtEur(fatur)}</div>
+      <div class="s">desta obra</div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--ink2)">
+      <div class="k">Por concluir</div>
+      <div class="v" style="font-size:24px">${fmtEur(pend)}</div>
+      <div class="s">obra feita ${pctExec.toFixed(0)}%</div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--verde)">
+      <div class="k">Recebido</div>
+      <div class="v pos" style="font-size:24px">${fmtEur(totReceb)}</div>
+      <div class="s">certificado: ${fmtEur(totCert)}</div>
+    </div>
+    <div class="card" style="border-left:4px solid ${faltaReceber>0.5?'var(--verm)':'var(--verde)'}">
+      <div class="k">Por receber</div>
+      <div class="v ${faltaReceber>0.5?'neg':'pos'}" style="font-size:24px">${fmtEur(faltaReceber)}</div>
+      <div class="s">líquido − recebido</div>
+    </div>
+    <div class="card" style="border-left:4px solid ${margem>=0?'var(--verde)':'var(--verm)'}">
+      <div class="k">Margem</div>
+      <div class="v ${margem>=0?'pos':'neg'}" style="font-size:24px">${fmtEur(margem)}</div>
+      <div class="s">− custos ${fmtEur(totCus)}</div>
+    </div>
+    <div class="card" style="border-left:4px solid #8a6d3b">
+      <div class="k">Retido (garantia)</div>
+      <div class="v" style="font-size:24px;color:#8a6d3b">${fmtEur(totRet)}</div>
+      <div class="s">recuperas no fim da obra</div>
+    </div>
+  </div>`;
+
+  // ===== Como se chega à margem (conta simples) =====
+  const hV=(DB.extras||[]).reduce((a,e)=>a+e.area*(e.preco!=null?e.preco:(tarifaAtual().precos.HORAS||0)),0);
+  html+=`<div class="big"><div class="titulo">Como se chega à margem</div>
+    <div class="ledger">
+      <div class="lrow"><span class="llbl">Trabalho já executado (a faturar)</span><span class="lval">${fmtEur(fatur)}</span></div>
+      ${hV>0.01?`<div class="lrow sub"><span>· inclui horas avulsas faturadas</span><span class="lval" style="font-weight:400">${fmtEur(hV)}</span></div>`:''}
+      <div class="lrow"><span class="llbl">Custos até agora</span><span class="lval" style="color:var(--verm)">− ${fmtEur(totCus)}</span></div>
+      ${CATS.filter(ct=>totCat[ct]>0.01).map(ct=>`<div class="lrow sub"><span>· ${CATLBL[ct]}${ct==='SALARIOS'?' (equipa + encargos '+DB.config.encargosPct+'%)':''}</span><span class="lval" style="font-weight:400">${fmtEur(totCat[ct])}</span></div>`).join('')}
+      ${custoIndireto>0.01?`<div class="lrow sub"><span>· Custos indiretos (${indPct}% da faturação · seguros, contab., escritório)</span><span class="lval" style="font-weight:400">${fmtEur(custoIndireto)}</span></div>`:''}
+      <div class="lrow res"><span class="llbl">= MARGEM</span><span class="lval" style="color:${margem>=0?'var(--verde)':'var(--verm)'}">${fmtEur(margem)}</span></div>
+    </div>
+    <div class="note" style="margin-top:6px">Valor total do contrato (obra completa): <b>${fmtEur(contrato)}</b> · por concluir ainda: <b>${fmtEur(pend)}</b>.</div>
+  </div>`;
+
+  // ===== Barra de recebimento =====
+  html+=`<div class="big"><div class="titulo">Dinheiro do cliente</div>
+    <div class="ledger">
+      <div class="lrow"><span class="llbl">Líquido a receber (já sem retenção de garantia)</span><span class="lval">${fmtEur(liq)}</span></div>
+      <div class="lrow"><span class="llbl">Já recebido</span><span class="lval" style="color:var(--verde)">− ${fmtEur(totReceb)}</span></div>
+      <div class="lrow res"><span class="llbl">= Falta receber</span><span class="lval" style="color:${faltaReceber>0.5?'var(--verm)':'var(--verde)'}">${fmtEur(faltaReceber)}</span></div>
+    </div>
+    <div class="pbar" style="height:14px;--cor:var(--verde);margin-top:10px"><div class="feito" style="width:${liq?Math.min(100,totReceb/liq*100):0}%"></div></div>
+    <div class="note" style="margin:2px 0 0">${liq?Math.min(100,totReceb/liq*100).toFixed(0):0}% já recebido${totRet>0.5?' · retenção de garantia a recuperar no fim: '+fmtEur(totRet):''}</div>
+  </div>`;
+
+  // ===== MÊS A MÊS (detalhe) =====
+  const maxV=Math.max(...mdata.map(d=>Math.max(d.f.base, d.receb, d.cus)),1);
+  html+=`<div class="big"><div class="titulo">Mês a mês</div>
+    <div class="mchart">${mdata.map(d=>`<div class="m3">
+      <div class="m3bars">
+        <div class="m3b" title="Faturável ${fmtEur(d.f.base)}" style="height:${Math.max(2,d.f.base/maxV*100)}%;background:var(--laranja)"></div>
+        <div class="m3b" title="Recebido ${fmtEur(d.receb)}" style="height:${Math.max(2,d.receb/maxV*100)}%;background:var(--verde)"></div>
+        <div class="m3b" title="Custos ${fmtEur(d.cus)}" style="height:${Math.max(2,d.cus/maxV*100)}%;background:var(--verm)"></div>
+      </div>
+      <div class="ml">${d.mes.slice(5)}/${d.mes.slice(2,4)}</div>
+    </div>`).join('')}</div>
+    <div class="note" style="margin:0 0 8px"><span style="color:var(--laranja-esc)">■</span> faturável &nbsp; <span style="color:var(--verde)">■</span> recebido &nbsp; <span style="color:var(--verm)">■</span> custos</div>
+    <div class="scroll"><table style="font-size:12.5px"><tr><th>Mês</th><th class="n">Faturável</th><th class="n">Custos</th><th class="n">Margem</th><th class="n">%</th><th class="n">Recebido</th><th class="n">Por receber</th></tr>
+    ${mdata.map(d=>{const mg=d.f.base-d.cus; const pr=d.f.liquido-d.receb; return `<tr><td>${mesLbl(d.mes)}</td><td class="n">${fmtEur(d.f.base)}</td><td class="n">${fmtEur(d.cus)}</td><td class="n ${mg>=0?'pos':'neg'}"><b>${fmtEur(mg)}</b></td><td class="n">${d.f.base?(mg/d.f.base*100).toFixed(0)+'%':'—'}</td><td class="n" style="color:var(--verde)">${d.receb?fmtEur(d.receb):'—'}</td><td class="n ${pr>0.5?'neg':'pos'}">${fmtEur(pr)}</td></tr>`;}).join('')}
+    <tr class="tot"><td>Total</td><td class="n">${fmtEur(fatur)}</td><td class="n">${fmtEur(totCus)}</td><td class="n ${margem>=0?'pos':'neg'}">${fmtEur(margem)}</td><td class="n">${margemPct.toFixed(0)}%</td><td class="n">${fmtEur(totReceb)}</td><td class="n ${faltaReceber>0.5?'neg':'pos'}">${fmtEur(faltaReceber)}</td></tr>
+    </table></div>
+  </div>`;
+  return html;
+}
+
+function rResumo(){
+  const FCOR=new Proxy({},{get:(t,k)=>faseCor(k)});
+  const meses=mesesAtivos();
+  let fatur=0, liq=0;
+  const mdata=meses.map(mes=>{
+    const f=faturavelMes(mes);
+    fatur+=f.base; liq+=f.liquido;
+    const certs=DB.certs.filter(c=>c.mes===mes);
+    return {mes,f,certBase:certs.reduce((a,c)=>a+c.base,0),receb:certs.reduce((a,c)=>a+c.recebido,0)};
+  }).filter(d=>d.f.base>0.01||d.certBase>0.01);
+  const pend=DB.zones.reduce((a,z)=>a+zonaPendente(z),0);
+  const totReceb=DB.certs.reduce((a,c)=>a+c.recebido,0);
+  const totCert=DB.certs.reduce((a,c)=>a+c.base,0);
+  const totRet=mesesAtivos().reduce((a,m)=>a+faturavelMes(m).ret,0);
+  const totCustosDir=DB.custos.reduce((a,x)=>a+x.valor,0);
+  const custoIndireto=Math.round(fatur*(DB.config.indiretosPct||0)/100*100)/100;
+  const totCustos=totCustosDir+custoIndireto;
+
+  let html=`<div class="big"><div class="titulo">Estado da obra (valores ao cliente)</div>
+    <div class="kpis">
+      <div class="kpi"><div class="n1" style="color:var(--laranja-esc)">${fmtEur(fatur)}</div><div class="n2">faturável executado</div></div>
+      <div class="kpi"><div class="n1">${fmtEur(pend)}</div><div class="n2">por concluir (à tarifa atual)</div></div>
+      <div class="kpi"><div class="n1" style="color:var(--verde)">${fmtEur(totReceb)}</div><div class="n2">recebido</div></div>
+      <div class="kpi"><div class="n1" style="color:var(--ink2)">${fmtEur(totRet)}</div><div class="n2">retenção garantia (a recuperar)</div></div>
+      <div class="kpi"><div class="n1" style="color:${liq-totReceb>0.5?'var(--verm)':'var(--verde)'}">${fmtEur(liq-totReceb)}</div><div class="n2">por receber (líquido − recebido)</div></div>
+      <div class="kpi"><div class="n1" style="color:${fatur-totCustos>=0?'var(--verde)':'var(--verm)'}">${fmtEur(fatur-totCustos)}</div><div class="n2">margem real (− custos ${fmtEur(totCustos)})</div></div>
+    </div>
+    <div class="pbar" style="height:14px;--cor:var(--verde)"><div class="feito" style="width:${liq?Math.min(100,totReceb/liq*100):0}%"></div></div>
+    <div class="note" style="margin:2px 0 0">${liq?Math.min(100,totReceb/liq*100).toFixed(0):0}% do líquido faturável já recebido · certificado pelo cliente: ${fmtEur(totCert)}</div>
+  </div>`;
+
+  return html;
+}
+
+function rM2(){
+  const cp=tarifaAtual().precos;
+  // ===== ZONAS PRONTAS (€): uma zona só está pronta quando todas as fases ativas estão feitas =====
+  let vTotal=0, vPronto=0, vFalta=0;       // €: valor total da obra, € das zonas prontas, € por terminar
+  let nZonasTotal=0, nZonasProntas=0;
+  DB.zones.forEach(z=>{
+    if(z.anulada) return;
+    let temFaseAtiva=false, todasFeitas=true, valorZona=0;
+    FASES.forEach(f=>{
+      const fd=z.fases[f];
+      if(fd&&fd.anulada) return;
+      temFaseAtiva=true;
+      // valor da fase: ao preço do mês em que foi feita, ou à tarifa atual se ainda pendente
+      const preco = (fd&&fd.mes) ? (tarifaDoMes(fd.mes).precos[f]||0) : (cp[f]||0);
+      valorZona += z.area*preco;
+      if(!(fd&&fd.mes)) todasFeitas=false;
+    });
+    if(!temFaseAtiva) return;
+    nZonasTotal++; vTotal+=valorZona;
+    if(todasFeitas){ nZonasProntas++; vPronto+=valorZona; }
+    else vFalta+=valorZona;
+  });
+  const pctGeral=vTotal?vPronto/vTotal*100:0;
+
+  // ===== POR FASE (€): faturado e pendente =====
+  const fdata={}; FASES.forEach(f=>fdata[f]={fat:0,pend:0});
+  DB.zones.forEach(z=>{ if(z.anulada) return; FASES.forEach(f=>{
+    const fd=z.fases[f];
+    if(fd&&fd.anulada) return;
+    if(fd&&fd.mes) fdata[f].fat+=z.area*(tarifaDoMes(fd.mes).precos[f]||0);
+    else fdata[f].pend+=z.area*(cp[f]||0);
+  }); });
+
+  // ===== MÊS A MÊS (€): valor faturado em cada mês (todas as fases concluídas nesse mês) =====
+  const mesV={};
+  DB.zones.forEach(z=>{ if(z.anulada) return; FASES.forEach(f=>{
+    const fd=z.fases[f];
+    if(fd&&fd.mes&&!fd.anulada){ mesV[fd.mes]=(mesV[fd.mes]||0)+z.area*(tarifaDoMes(fd.mes).precos[f]||0); }
+  }); });
+  // horas avulsas por mês
+  (DB.extras||[]).forEach(e=>{ if(e.mes){ const ph=(e.preco!=null?e.preco:(cp.HORAS||0)); mesV[e.mes]=(mesV[e.mes]||0)+e.area*ph; } });
+  const mesesV=Object.keys(mesV).sort();
+  const maxMes=Math.max(...mesesV.map(m=>mesV[m]),1);
+  const totFatMes=mesesV.reduce((a,m)=>a+mesV[m],0);
+
+  let html=`<div style="background:${pctGeral>=100?'var(--verde)':'var(--laranja)'};color:#fff;border-radius:10px;padding:16px 22px;margin:0 0 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>
+      <div style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;opacity:.9">Valor das zonas 100% prontas</div>
+      <div style="font-size:14px;opacity:.85;margin-top:2px">${fmtEur(vPronto)} de ${fmtEur(vTotal)} · falta ${fmtEur(vFalta)} · ${nZonasProntas} de ${nZonasTotal} zonas</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:34px;font-weight:800">${pctGeral.toFixed(0)}%</div>
+  </div>`;
+
+  // cartões de totais (€)
+  html+=`<div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:14px">
+    <div class="card" style="border-left:4px solid var(--ink2)"><div class="k">Valor total (auto)</div><div class="v" style="font-size:24px">${fmtEur(vTotal)}</div><div class="s">${nZonasTotal} zonas</div></div>
+    <div class="card" style="border-left:4px solid var(--verde)"><div class="k">€ zonas prontas</div><div class="v pos" style="font-size:24px">${fmtEur(vPronto)}</div><div class="s">${nZonasProntas} zonas · todas as fases feitas</div></div>
+    <div class="card" style="border-left:4px solid var(--laranja)"><div class="k">€ por terminar</div><div class="v" style="font-size:24px;color:var(--laranja-esc)">${fmtEur(vFalta)}</div><div class="s">${nZonasTotal-nZonasProntas} zonas por terminar</div></div>
+  </div>`;
+
+  // por fase (€)
+  const totFat=FASES.reduce((a,f)=>a+fdata[f].fat,0);
+  const totPend=FASES.reduce((a,f)=>a+fdata[f].pend,0);
+  const totTot=totFat+totPend;
+  const pctFat=totTot?totFat/totTot*100:0;
+  html+=`<div class="big"><div class="titulo">Valor por fase (€)</div>
+    <div class="scroll"><table style="font-size:13px"><tr><th>Fase</th><th class="n">Faturado</th><th class="n">Pendente</th><th class="n">Total</th><th class="n">%</th></tr>
+    ${FASES.map(f=>{ const d=fdata[f]; const tot=d.fat+d.pend; const pct=tot?d.fat/tot*100:0; return `<tr><td>${tagFase(f)}</td><td class="n pos">${fmtEur(d.fat)}</td><td class="n" style="color:var(--laranja-esc)">${fmtEur(d.pend)}</td><td class="n">${fmtEur(tot)}</td><td class="n"><b>${pct.toFixed(0)}%</b></td></tr>`; }).join('')}
+    <tr class="tot"><td>Total</td><td class="n pos">${fmtEur(totFat)}</td><td class="n" style="color:var(--laranja-esc)">${fmtEur(totPend)}</td><td class="n">${fmtEur(totTot)}</td><td class="n">${pctFat.toFixed(0)}%</td></tr>
+    </table></div>
+    <div class="note" style="margin:0">Esta tabela conta <b>cada fase separadamente</b> (€ já faturado vs € pendente). O valor das "zonas 100% prontas" no topo só conta uma zona quando <b>todas as fases dela</b> estão feitas.</div>
+  </div>`;
+
+  // progresso por fase (barras, €)
+  html+=`<div class="big"><div class="titulo">Progresso por fase (€)</div>`;
+  FASES.forEach(f=>{
+    const d=fdata[f]; const tot=d.fat+d.pend; const pct=tot?d.fat/tot*100:0;
+    html+=`<div class="flinha">
+      ${tagFase(f)}
+      <div><div class="pbar" style="--cor:${faseCor(f)}"><div class="feito" style="width:${pct}%"></div><div class="pend" style="width:${100-pct}%"></div></div></div>
+      <div class="fnum"><b>${pct.toFixed(0)}%</b> · ${fmtEur(d.fat)} faturado${d.pend>0.01?` · <span class="neg">${fmtEur(d.pend)} pendente</span>`:''}</div>
+    </div>`;
+  });
+  // horas avulsas faturadas
+  const hV=(DB.extras||[]).reduce((a,e)=>a+e.area*(e.preco!=null?e.preco:(cp.HORAS||0)),0);
+  if(hV>0.01){
+    html+=`<div class="flinha">
+      <span class="tagF" style="background:#7772;color:#555;font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px">HORAS</span>
+      <div><div class="pbar" style="--cor:#888"><div class="feito" style="width:100%"></div></div></div>
+      <div class="fnum"><b>${fmtEur(hV)}</b> faturado</div>
+    </div>`;
+  }
+  html+=`</div>`;
+
+  // mês a mês (€)
+  html+=`<div class="big"><div class="titulo">Faturado mês a mês (€)</div>`;
+  if(mesesV.length){
+    html+=`<div class="mchart">${mesesV.map(m=>`<div class="mcol">
+      <div class="mv">${(mesV[m]/1000).toFixed(1)}k</div>
+      <div class="mb" style="height:${Math.max(4,mesV[m]/maxMes*100)}%;background:var(--laranja)"></div>
+      <div class="ml">${m.slice(5)}/${m.slice(2,4)}</div>
+    </div>`).join('')}</div>
+    <div class="scroll"><table style="font-size:13px"><tr><th>Mês</th><th class="n">Faturado</th><th class="n">Acumulado</th></tr>
+    ${(()=>{ let ac=0; return mesesV.map(m=>{ ac+=mesV[m]; return `<tr><td>${mesLbl(m)}</td><td class="n pos">${fmtEur(mesV[m])}</td><td class="n">${fmtEur(ac)}</td></tr>`; }).join(''); })()}
+    <tr class="tot"><td>Total</td><td class="n pos">${fmtEur(totFatMes)}</td><td class="n">${fmtEur(totFatMes)}</td></tr>
+    </table></div>`;
+  } else {
+    html+=`<div class="note" style="margin:0">Ainda não há fases concluídas com data de auto.</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function rAuto(){
+  const meses = mesesAtivos();
+  let html=`<div class="bar">
+    <select id="fMes"><option value="">Todas as datas de auto</option>${[...new Set(DB.zones.map(z=>(z.dataAuto||'').slice(0,7)).filter(Boolean))].sort().map(m=>`<option ${filtroMes===m?'selected':''} value="${m}">Auto ${mesLbl(m)}</option>`).join('')}</select>
+    <select id="fFase"><option value="">Todas as zonas</option><option ${filtroFase==='PEND'?'selected':''} value="PEND">Com fases pendentes</option></select>
+    <button class="act" id="bNovo">+ Nova zona</button>
+    <button class="sec" id="bSyncIn2" style="font-weight:700">⇄ Importar autos da app Funcionários</button>
+  </div>`;
+  if(editId!==null){
+    const z = editId==='new' ? {desc:'',comp:'',alt:'',area:'',fases:Object.fromEntries(FASES.map(f=>[f,null]))} : DB.zones.find(x=>x.id===editId);
+    const ultMes = mesAtual();
+    html+=`<div class="form">
+      <div class="row">
+        <label>Descrição da zona<input type="text" id="zDesc" value="${z.desc}" style="width:280px"></label>
+        <label>Compr.<input type="number" step="0.01" id="zComp" value="${z.comp}" style="width:90px"></label>
+        <label>Altura<input type="number" step="0.01" id="zAlt" value="${z.alt}" style="width:90px"></label>
+        <label>Área m²<input type="number" step="0.001" id="zArea" value="${z.area}" style="width:110px"></label>
+        <label>Data do auto<input type="date" id="zData" value="${z.dataAuto||''}"></label>
+      </div>`;
+    FASES.forEach(f=>{
+      const fd=z.fases[f]; const on=!!(fd&&fd.mes);
+      html+=`<div class="row" style="align-items:center;border-top:1px dashed var(--linha);padding-top:8px">
+        <span class="tag ${f}" style="font-size:12px;min-width:90px">${f}</span>
+        <label style="flex-direction:row;align-items:center;gap:5px;text-transform:none"><input type="checkbox" class="fOn" data-f="${f}" ${on?'checked':''}> Concluído</label>
+        <label>Mês<input type="text" class="fMesI" data-f="${f}" value="${on?fd.mes:ultMes}" placeholder="2026-06" style="width:95px" ${on?'':'disabled'}></label>
+      </div>`;
+    });
+    html+=`<div class="bar" style="margin-top:10px"><button class="act" id="bGuardarZ">Guardar zona</button><button class="sec" id="bCancIt">Cancelar</button></div>
+    <div class="note">O valor fatura-se automaticamente à tarifa do cliente em vigor no mês de conclusão de cada fase.</div></div>`;
+  }
+  if(filtroFase==='PEND' && editId===null){
+    html+=`<div class="form"><div style="font-weight:700;margin-bottom:8px">Marcar fases concluídas em lote</div>
+      <div class="row" style="align-items:flex-end">
+        <label>Fase<select id="lbFase"><option value="PINTURA">Pintura (acrílico)</option><option value="BARRAMENTO">Barramento</option><option value="EPS">EPS (placa)</option></select></label>
+        <label>Mês de conclusão<input type="text" id="lbMes" value="${mesAtual()}" style="width:95px"></label>
+        <button class="act" id="bLote">✓ Marcar selecionadas</button>
+        <span class="note" id="lbInfo" style="margin:0">Seleciona as zonas na lista abaixo.</span>
+      </div></div>`;
+  }
+  const list = DB.zones.filter(z=>{
+    if(filtroFase==='PEND' && !FASES.some(f=>!z.fases[f]||!z.fases[f].mes)) return false;
+    if(filtroMes && (z.dataAuto||'').slice(0,7)!==filtroMes) return false;
+    return true;
+  }).sort((a,b)=>((a.dataAuto||'9999-99-99')<(b.dataAuto||'9999-99-99')?-1:(a.dataAuto||'9999-99-99')>(b.dataAuto||'9999-99-99')?1:0));
+  const chip=(z,f)=>{
+    const fd=z.fases[f];
+    if(fd&&fd.anulada) return `<button class="mini" data-toggleanul="${z.id}|${f}" title="Fase anulada — clica para reativar" style="color:var(--ink2);font-size:10.5px;text-decoration:line-through">anulada</button>`;
+    if(fd&&fd.mes) return `<span style="display:inline-flex;gap:2px;align-items:center"><span class="tagF" style="background:${faseCor(f)}22;color:${faseCor(f)};font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px">${fd.mes.slice(5)}/${fd.mes.slice(2,4)}</span><button class="mini" data-toggleanul="${z.id}|${f}" title="Anular esta fase concluída" style="font-size:10px;color:var(--ink2);padding:0 2px">✕</button></span>`;
+    return `<span style="display:inline-flex;gap:3px;align-items:center"><button class="mini" data-ed="${z.id}" style="color:var(--verm);font-size:11px;font-weight:700">pendente</button><button class="mini" data-toggleanul="${z.id}|${f}" title="Anular esta fase (não se faz)" style="font-size:11px;color:var(--ink2)">✕</button></span>`;
+  };
+  let sA=0,sV=0,sP=0;
+  // agrupar por mês do auto
+  const grupos={}; const ordem=[];
+  list.forEach(z=>{ const mk=(z.dataAuto||'').slice(0,7)||'sem'; if(!grupos[mk]){grupos[mk]=[];ordem.push(mk);} grupos[mk].push(z); });
+  ordem.sort((a,b)=>a<b?-1:a>b?1:0);
+  const autoMesFechado=autoMesFechadoMap();
+  const fechAll = ordem.length>1 && ordem.every(mk=>autoMesFechado[mk]);
+  html+=`<div class="bar" style="margin:4px 0 8px;gap:6px">
+    <button class="sec" id="bAutoFecharTudo" style="font-size:12px">${fechAll?'▼ Abrir todos os meses':'▲ Fechar todos os meses'}</button>
+    <span class="note" style="margin:0">${ordem.length} ${ordem.length==1?'mês':'meses'} de auto · clica no mês para abrir/fechar</span>
+  </div>`;
+  html+=`<div class="scroll tlock" id="tlockAuto"><table style="font-size:12.5px"><tr><th>Zona</th><th>Data auto</th><th class="n">m²</th>${FASES.map(f=>`<th>${faseNome(f)}</th>`).join('')}<th class="n">Faturado</th><th class="n">Pendente</th><th></th></tr>`;
+  ordem.forEach(mk=>{
+    const zs=grupos[mk];
+    let gA=0,gV=0,gP=0; zs.forEach(z=>{ gA+=z.anulada?0:z.area; gV+=zonaFaturado(z); gP+=zonaPendente(z); });
+    const gFase={}; FASES.forEach(f=>gFase[f]=0);
+    zs.forEach(z=>{ if(z.anulada)return; FASES.forEach(f=>{ const fd=z.fases[f]; if(fd&&!fd.anulada&&fd.mes) gFase[f]+=z.area; }); });
+    const fasesTxt = FASES.filter(f=>gFase[f]>0.01).map(f=>`<span style="color:${faseCor(f)};font-weight:700">${faseNome(f)} ${fmtN(gFase[f])} m²</span>`).join(' · ');
+    const anFase={}; FASES.forEach(f=>anFase[f]=0);
+    zs.forEach(z=>{ FASES.forEach(f=>{ const fd=z.fases[f]; if(z.anulada || (fd&&fd.anulada)) anFase[f]+=z.area; }); });
+    const anulTxt = FASES.filter(f=>anFase[f]>0.01).map(f=>`${faseNome(f)} ${fmtN(anFase[f])} m²`).join(' · ');
+    const fechado=!!autoMesFechado[mk];
+    const lblMes = mk==='sem' ? 'Sem data de auto' : 'Auto '+mesLbl(mk);
+    const mesCompleto = zs.length>0 && zs.every(z=> z.anulada || FASES.every(f=>{ const fd=z.fases[f]; return fd && (fd.anulada || fd.mes); }));
+    const bgMes = mesCompleto ? '#D6F0E2' : '#FBF0E6';
+    html+=`<tr class="gmes" data-gmes="${mk}" style="cursor:pointer;background:${bgMes}"><td colspan="${3+FASES.length}" style="font-weight:800"><span style="display:inline-block;width:14px">${fechado?'▶':'▼'}</span>${mesCompleto?'<span style="color:var(--verde)">✓ </span>':''}${lblMes} <span style="font-weight:500;color:var(--ink2);font-size:12px">· ${zs.length} ${zs.length==1?'zona':'zonas'} · ${fmtN(gA)} m²${mesCompleto?' · <span style="color:var(--verde);font-weight:700">concluído</span>':''}</span>${fasesTxt?`<div style="font-weight:500;font-size:11px;margin-top:2px;padding-left:14px">${fasesTxt}</div>`:''}${anulTxt?`<div style="font-weight:500;font-size:11px;margin-top:1px;padding-left:14px;color:var(--ink2)">⊘ Anuladas: ${anulTxt}</div>`:''}</td><td class="n"><b>${fmtEur(gV)}</b></td><td class="n ${gP>0?'neg':''}">${gP>0?fmtEur(gP):'—'}</td><td></td></tr>`;
+    if(!fechado){
+      zs.forEach(z=>{
+        const v=zonaFaturado(z), p=zonaPendente(z);
+        const cb = filtroFase==='PEND' ? `<input type="checkbox" class="lbSel" data-z="${z.id}" style="margin-right:6px">` : '';
+        const ri = z.anulada ? 'opacity:.5;text-decoration:line-through' : '';
+        const btnAnul = z.anulada
+          ? `<button class="mini" data-toggle-zona="${z.id}" title="Reativar linha" style="color:var(--verde)">↺</button>`
+          : `<button class="mini" data-toggle-zona="${z.id}" title="Anular linha inteira" style="color:var(--ink2)">⊘</button>`;
+        html+=`<tr style="${ri}"><td style="padding-left:18px">${cb}${z.desc}${z.anulada?' <span style="font-size:9px;color:var(--verm);text-decoration:none">ANULADA</span>':''}</td><td style="font-size:12px;font-family:var(--mono)">${z.dataAuto||'—'}</td><td class="n">${fmtN(z.area)}</td>
+        ${FASES.map(f=>`<td>${z.anulada?'—':chip(z,f)}</td>`).join('')}
+        <td class="n"><b>${fmtEur(v)}</b></td><td class="n ${p>0?'neg':''}">${p>0?fmtEur(p):'—'}</td>
+        <td style="text-decoration:none">${btnAnul}<button class="mini" data-ed="${z.id}">✏️</button><button class="mini" data-del="${z.id}">🗑️</button></td></tr>`;
+      });
+    }
+    sA+=gA; sV+=gV; sP+=gP;
+  });
+  html+=`<tr class="tot"><td colspan="2">Total (${list.length} zonas)</td><td class="n">${fmtN(sA)}</td><td colspan="${FASES.length}"></td><td class="n">${fmtEur(sV)}</td><td class="n">${fmtEur(sP)}</td><td></td></tr></table></div>
+  <div class="note">Valores às tarifas do cliente. As fases pendentes estão avaliadas à tarifa atual.</div>`;
+
+  // ---- Horas avulsas (faturadas à tarifa de horas do cliente) ----
+  const tarifaH = tarifaAtual().precos.HORAS||0;
+  const hv=DB.extras.reduce((a,e)=>a+e.area*(e.preco!=null?e.preco:tarifaH),0);
+  html+=`<h2>Horas avulsas</h2><div class="form"><div class="row">
+    <label>Descrição<input type="text" id="hDesc" placeholder="Horas mês junho" style="width:200px"></label>
+    <label>Horas<input type="number" step="0.5" id="hQtd" style="width:80px"></label>
+    <label>Preço €/h (cliente)<input type="number" step="0.01" id="hPreco" value="${tarifaH}" style="width:90px"></label>
+    <label>Mês<input type="text" id="hMes" value="${mesAtual()}" style="width:95px"></label>
+    <label>&nbsp;<button class="act" id="bH">+ Registar horas</button></label>
+  </div>
+  <div class="note">As horas são faturadas ao cliente à tarifa de horas. Preço por defeito vem das tarifas do cliente.</div></div>
+  <div class="scroll"><table><tr><th>Mês</th><th>Descrição</th><th class="n">Horas</th><th class="n">€/h</th><th class="n">Faturado</th><th></th></tr>
+  ${DB.extras.map(e=>`<tr><td style="font-family:var(--mono);font-size:12px">${e.mes}</td><td>${e.desc}</td><td class="n">${fmtN(e.area)}</td><td class="n">${fmtN(e.preco!=null?e.preco:tarifaH)}</td><td class="n"><b>${fmtEur(e.area*(e.preco!=null?e.preco:tarifaH))}</b></td><td><button class="mini" data-delh="${e.id}">🗑️</button></td></tr>`).join('')||'<tr><td colspan="6" style="color:var(--ink2)">Sem registos de horas.</td></tr>'}
+  </table></div>`;
+  return html;
+}
+
+function rFat(){
+  const meses=mesesAtivos();
+  let totBase=0, totLiq=0, totRetG=0, totRetX=0;
+  const mdata=meses.map(mes=>{
+    const f=faturavelMes(mes);
+    totBase+=f.base; totLiq+=f.liquido; totRetG+=f.ret; totRetX+=f.retExtra;
+    const certs=DB.certs.filter(c=>c.mes===mes);
+    return {mes,f,certBase:certs.reduce((a,c)=>a+c.base,0),receb:certs.reduce((a,c)=>a+c.recebido,0)};
+  }).filter(d=>d.f.base>0.01||d.certBase>0.01||d.f.retExtra>0.01);
+  const totCert=DB.certs.reduce((a,c)=>a+c.base,0);
+  const totReceb=DB.certs.reduce((a,c)=>a+c.recebido,0);
+
+  let html=`<div class="big"><div class="titulo">Por mês — faturável vs. certificado vs. recebido</div>
+  <div class="scroll"><table style="font-size:12.5px"><tr><th>Mês</th><th class="n">Base faturável</th><th class="n">Retenção</th><th class="n">Ret. extra</th><th class="n">Líquido</th><th class="n">Certificado</th><th class="n">Recebido</th><th class="n">Por receber</th></tr>
+  ${mdata.map(d=>{
+    const pr=d.f.liquido-d.receb;
+    const aberto = (DB.config._fatAberto===d.mes);
+    // detalhe das fases que compõem o faturável deste mês
+    const t=tarifaDoMes(d.mes); const cp=t.precos;
+    const linhasFase=FASES.filter(f=>d.f[f] && d.f[f].m2>0.001).map(f=>{
+      const nome=(DB.config.fases.find(x=>x.id===f)||{}).nome||f;
+      return `<div style="display:flex;justify-content:space-between;gap:12px;padding:2px 0"><span><b>${nome}</b> · ${fmtN(d.f[f].m2)} m² × ${fmtEur(cp[f]||0)}</span><span style="font-family:var(--mono)">${fmtEur(d.f[f].v)}</span></div>`;
+    });
+    if(d.f.HORAS && d.f.HORAS.m2>0.001){
+      linhasFase.push(`<div style="display:flex;justify-content:space-between;gap:12px;padding:2px 0"><span><b>HORAS</b> · ${fmtN(d.f.HORAS.m2)} h</span><span style="font-family:var(--mono)">${fmtEur(d.f.HORAS.v)}</span></div>`);
+    }
+    const detalhe = aberto && linhasFase.length ? `<tr class="fatDet"><td colspan="8" style="background:var(--bg);padding:10px 14px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:700;margin-bottom:4px">De onde vem o faturável de ${mesLbl(d.mes)}</div>${linhasFase.join('')}<div style="display:flex;justify-content:space-between;gap:12px;padding:4px 0 0;margin-top:4px;border-top:1px solid var(--linha);font-weight:700"><span>Total faturável</span><span style="font-family:var(--mono)">${fmtEur(d.f.base)}</span></div>${d.f.retExtra>0?`<div style="display:flex;justify-content:space-between;gap:12px;padding:2px 0;color:var(--verm)"><span>Retenção extra${d.f.retExtraNota?' ('+d.f.retExtraNota+')':''}</span><span style="font-family:var(--mono)">−${fmtEur(d.f.retExtra)}</span></div>`:''}</td></tr>` : '';
+    const retXcell = d.f.retExtra>0
+      ? `<td class="n retExtraCel" data-rxmes="${d.mes}" style="cursor:pointer;color:var(--verm)" title="${d.f.retExtraNota||'Retenção extra'} — clica para editar">−${fmtEur(d.f.retExtra)} ✏️</td>`
+      : `<td class="n retExtraCel" data-rxmes="${d.mes}" style="cursor:pointer;color:var(--linha)" title="Clica para adicionar uma retenção pontual neste mês">+ ✏️</td>`;
+    return `<tr data-fatmes="${d.mes}"><td class="fatLinha" data-fatmes="${d.mes}" style="cursor:pointer" title="Clica para ver o detalhe por fase">${aberto?'▾':'▸'} ${mesLbl(d.mes)}</td><td class="n">${fmtEur(d.f.base)}</td><td class="n" style="color:var(--ink2)">${d.f.retPct?'−'+fmtEur(d.f.ret)+' ('+d.f.retPct+'%)':'—'}</td>${retXcell}<td class="n"><b>${fmtEur(d.f.liquido)}</b></td><td class="n">${d.certBase?fmtEur(d.certBase):'—'}</td><td class="n" style="color:var(--verde)">${d.receb?fmtEur(d.receb):'—'}</td><td class="n ${pr>0.5?'neg':'pos'}">${fmtEur(pr)}</td></tr>${detalhe}`;
+  }).join('')}
+  <tr class="tot"><td>Total</td><td class="n">${fmtEur(totBase)}</td><td class="n">−${fmtEur(totRetG)}</td><td class="n" style="color:var(--verm)">${totRetX>0.01?'−'+fmtEur(totRetX):'—'}</td><td class="n">${fmtEur(totLiq)}</td><td class="n">${fmtEur(totCert)}</td><td class="n">${fmtEur(totReceb)}</td><td class="n ${totLiq-totReceb>0.5?'neg':'pos'}">${fmtEur(totLiq-totReceb)}</td></tr>
+  </table></div>
+  <div class="note">Clica no <b>mês</b> para ver de onde vem o valor. Clica na coluna <b>Ret. extra</b> para aplicar uma retenção pontual num mês (valor fixo, desconto definitivo). A retenção de garantia (%) recupera-se no fim da obra; a retenção extra não.</div>
+  </div>`;
+
+  const lbl='style="display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"';
+  html+=`<div class="big"><div class="titulo">Registar certificação / recebimento</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <label ${lbl}>Mês<input type="text" id="ctMes" value="${mesAtual()}" style="width:95px"></label>
+      <label ${lbl}>Nº documento<input type="text" id="ctNum" placeholder="PRO260034 / CERT Nº2" style="width:170px"></label>
+      <label ${lbl}>Valor base €<input type="number" step="0.01" id="ctBase" style="width:120px"></label>
+      <label ${lbl}>Recebido €<input type="number" step="0.01" id="ctReceb" style="width:120px"></label>
+      <label ${lbl}>Data<input type="date" id="ctData"></label>
+      <label ${lbl}>Nota<input type="text" id="ctNota" style="width:180px"></label>
+      <button class="act" id="bCt">Registar</button>
+    </div>
+    <div class="note">Quando receberes a transferência, usa o ✏️ na lista abaixo para preencher o valor recebido.</div>
+  </div>`;
+
+  html+=`<div class="big"><div class="titulo">Certificações registadas</div>
+  <div class="scroll"><table style="font-size:12.5px"><tr><th>Mês</th><th>Documento</th><th class="n">Base</th><th class="n">Recebido</th><th class="n">Por receber</th><th>Data</th><th>Nota</th><th></th></tr>
+  ${DB.certs.slice().sort((a,b)=>a.mes<b.mes?1:-1).map(c=>{const falta=c.base*(1-tarifaDoMes(c.mes).ret/100)-c.recebido;return `<tr><td style="font-family:var(--mono);font-size:12px">${c.mes}</td><td><b>${c.num}</b></td><td class="n">${fmtEur(c.base)}</td><td class="n" style="color:var(--verde)">${fmtEur(c.recebido)}</td><td class="n ${falta>0.5?'neg':'pos'}">${fmtEur(Math.max(0,falta))}</td><td style="font-size:12px">${c.data||'—'}</td><td style="font-size:11px;color:var(--ink2)">${c.nota||''}</td><td><button class="mini" data-edct="${c.id}">✏️</button><button class="mini" data-delct="${c.id}">🗑️</button></td></tr>`;}).join('')||'<tr><td colspan="8" style="color:var(--ink2)">Sem certificações registadas.</td></tr>'}
+  </table></div></div>`;
+  return html;
+}
+
+function rCustos(){
+  const meses=mesesAtivos();
+  const lbl='style="display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"';
+  const totCat={}; let totCustos=0, totFat=0;
+  CATS.forEach(ct=>totCat[ct]=0);
+  DB.custos.forEach(x=>{ totCat[x.cat]=(totCat[x.cat]||0)+x.valor; totCustos+=x.valor; });
+  meses.forEach(m=>{ totFat+=faturavelMes(m).base; });
+  const margem=totFat-totCustos;
+
+  let html=`<div class="big"><div class="titulo">Custos da obra</div>
+    <div class="kpis">
+      <div class="kpi"><div class="n1" style="color:var(--verm)">${fmtEur(totCustos)}</div><div class="n2">custos totais</div></div>
+      <div class="kpi"><div class="n1" style="color:var(--laranja-esc)">${fmtEur(totFat)}</div><div class="n2">faturável</div></div>
+      <div class="kpi"><div class="n1" style="color:${margem>=0?'var(--verde)':'var(--verm)'}">${fmtEur(margem)}</div><div class="n2">margem real (faturável − custos)</div></div>
+      <div class="kpi"><div class="n1" style="color:var(--ink2)">${totFat?(margem/totFat*100).toFixed(1):0}%</div><div class="n2">margem sobre o faturável</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+      ${CATS.filter(ct=>totCat[ct]>0.01).map(ct=>`<span class="tag ${ct}" style="font-size:11px;padding:4px 10px">${CATLBL[ct]}: <b>${fmtEur(totCat[ct])}</b>${totCustos?' · '+(totCat[ct]/totCustos*100).toFixed(0)+'%':''}</span>`).join('')}
+    </div>
+  </div>`;
+
+  // tabela mensal por categoria
+  html+=`<div class="big"><div class="titulo">Custos por mês e categoria</div>
+  <div class="scroll"><table style="font-size:12.5px"><tr><th>Mês</th>${CATS.map(ct=>`<th class="n">${CATLBL[ct]}</th>`).join('')}<th class="n">Total custos</th><th class="n">Faturável</th><th class="n">Margem</th></tr>
+  ${meses.filter(m=>custosMes(m)>0.01||faturavelMes(m).base>0.01).map(m=>{
+    const f=faturavelMes(m).base; const cm={}; let tm=0;
+    DB.custos.filter(x=>x.mes===m).forEach(x=>{cm[x.cat]=(cm[x.cat]||0)+x.valor; tm+=x.valor;});
+    const mg=f-tm;
+    return `<tr><td>${mesLbl(m)}</td>${CATS.map(ct=>`<td class="n">${cm[ct]?fmtEur(cm[ct]):'—'}</td>`).join('')}<td class="n"><b>${fmtEur(tm)}</b></td><td class="n">${fmtEur(f)}</td><td class="n ${mg>=0?'pos':'neg'}"><b>${fmtEur(mg)}</b></td></tr>`;
+  }).join('')}
+  <tr class="tot"><td>Total</td>${CATS.map(ct=>`<td class="n">${fmtEur(totCat[ct])}</td>`).join('')}<td class="n">${fmtEur(totCustos)}</td><td class="n">${fmtEur(totFat)}</td><td class="n ${margem>=0?'pos':'neg'}">${fmtEur(margem)}</td></tr>
+  </table></div>
+  <div class="note">Os salários e os custos partilhados (deslocações, alojamento, equipamentos) entram automaticamente quando importas os autos da app Funcionários — repartidos por obra, mês a mês.</div>
+  </div>`;
+
+  // lista
+  const fm=filtroMes&&meses.includes(filtroMes)?filtroMes:'';
+  const lista=DB.custos.filter(x=>!fm||x.mes===fm).slice().sort((a,b)=>a.mes<b.mes?1:-1);
+  html+=`<div class="big"><div class="titulo">Custos registados</div>
+  <div class="bar" style="margin-top:0"><select id="fMesCu"><option value="">Todos os meses</option>${meses.map(m=>`<option ${fm===m?'selected':''} value="${m}">${mesLbl(m)}</option>`).join('')}</select></div>
+  <div class="scroll"><table style="font-size:12.5px"><tr><th>Mês</th><th>Categoria</th><th>Descrição</th><th class="n">Valor</th><th>Data</th><th></th></tr>
+  ${lista.map(x=>`<tr><td style="font-family:var(--mono);font-size:12px">${x.mes}</td><td><span class="tag ${x.cat}">${CATLBL[x.cat]}</span></td><td>${x.cat==='SALARIOS'&&x.valorBase!=null?`${x.auto?'Salários equipa':x.desc} <span style="font-family:var(--mono);font-size:11px;color:var(--ink2)">(${fmtEur(x.valorBase)} + ${DB.config.encargosPct}%)</span>${x.auto?' <span style="font-size:10px;color:var(--ink2)">⇄ auto</span>':''}`:x.desc}</td><td class="n"><b>${fmtEur(x.valor)}</b></td><td style="font-size:12px">${x.data||'—'}</td><td>${x.auto?'':`<button class="mini" data-edcu="${x.id}">✏️</button>`}<button class="mini" data-delcu="${x.id}">🗑️</button></td></tr>`).join('')||'<tr><td colspan="6" style="color:var(--ink2)">Sem custos registados.</td></tr>'}
+  </table></div>
+  <div class="note">Os custos "⇄ auto" (salários e custos partilhados) são atualizados pela sincronização — se os apagares, voltam na próxima importação.</div>
+  </div>`;
+  return html;
+}
+
+// ===== Arquivo de documentos (IndexedDB) =====
+const DCATS=['FATURA','CERTIFICACAO','AUTO','FOTO','OUTRO'];
+const DCATLBL={FATURA:'Fatura',CERTIFICACAO:'Certificação',AUTO:'Auto',FOTO:'Foto da obra',OUTRO:'Outro'};
+const idb={
+  db:null,
+  open(){ return new Promise((res,rej)=>{
+    if(idb.db) return res();
+    const r=indexedDB.open('constroii_arquivo_'+KEY,1);
+    r.onupgradeneeded=()=>{ r.result.createObjectStore('files',{keyPath:'id',autoIncrement:true}); };
+    r.onsuccess=()=>{ idb.db=r.result; res(); };
+    r.onerror=()=>rej(r.error);
+  });},
+  add(rec){ return idb.open().then(()=>new Promise((res,rej)=>{
+    const t=idb.db.transaction('files','readwrite').objectStore('files').add(rec);
+    t.onsuccess=()=>res(t.result); t.onerror=()=>rej(t.error);
+  }));},
+  all(){ return idb.open().then(()=>new Promise((res,rej)=>{
+    const t=idb.db.transaction('files','readonly').objectStore('files').getAll();
+    t.onsuccess=()=>res(t.result||[]); t.onerror=()=>rej(t.error);
+  }));},
+  del(id){ return idb.open().then(()=>new Promise((res,rej)=>{
+    const t=idb.db.transaction('files','readwrite').objectStore('files').delete(id);
+    t.onsuccess=()=>res(); t.onerror=()=>rej(t.error);
+  }));}
+};
+let arqFiltCat='', arqFiltMes='';
+function rArq(){
+  const lbl='style="display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"';
+  return `<div class="big"><div class="titulo">Arquivar documento</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <label ${lbl}>Ficheiros<input type="file" id="aqFile" multiple accept="image/*,application/pdf,.xlsx,.xls,.doc,.docx"></label>
+      <label ${lbl}>Categoria<select id="aqCat">${DCATS.map(c=>`<option value="${c}">${DCATLBL[c]}</option>`).join('')}</select></label>
+      <label ${lbl}>Mês<input type="text" id="aqMes" value="${mesAtual()}" style="width:95px"></label>
+      <label ${lbl}>Descrição<input type="text" id="aqDesc" placeholder="Fatura gasóleo, foto fachada norte..." style="width:240px"></label>
+      <button class="act" id="bAq">📁 Arquivar</button>
+    </div>
+    <div class="note">Aceita fotos, PDFs (faturas, certificações, autos assinados) e documentos. Podes escolher vários ficheiros de uma vez. Ficam guardados na base de dados do browser deste computador — para levar para outra máquina, descarrega-os daqui.</div>
+  </div>
+  <div class="big"><div class="titulo">Documentos arquivados</div>
+    <div class="bar" style="margin-top:0">
+      <select id="aqFCat"><option value="">Todas as categorias</option>${DCATS.map(c=>`<option ${arqFiltCat===c?'selected':''} value="${c}">${DCATLBL[c]}</option>`).join('')}</select>
+      <input type="text" id="aqFMes" placeholder="Filtrar mês: 2026-06" value="${arqFiltMes}" style="width:140px">
+      <span class="note" id="aqInfo" style="margin:0"></span>
+    </div>
+    <div id="aqLista" class="note">A carregar…</div>
+  </div>`;
+}
+function tamH(b){ return b>1048576? (b/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(b/1024))+' KB'; }
+async function listarArq(){
+  const el=document.getElementById('aqLista'); if(!el) return;
+  let files=[];
+  try{ files=await idb.all(); }catch(e){ el.innerHTML='<span class="neg">O arquivo não está disponível neste browser ('+e+').</span>'; return; }
+  files=files.filter(f=>(!arqFiltCat||f.cat===arqFiltCat)&&(!arqFiltMes||f.mes===arqFiltMes)).sort((a,b)=>b.id-a.id);
+  const tot=files.reduce((a,f)=>a+(f.tamanho||0),0);
+  const info=document.getElementById('aqInfo');
+  if(info) info.textContent=files.length+' documentos · '+tamH(tot);
+  if(!files.length){ el.innerHTML='<span style="color:var(--ink2)">Sem documentos'+(arqFiltCat||arqFiltMes?' com este filtro':'')+'.</span>'; return; }
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">'+files.map(f=>{
+    const url=URL.createObjectURL(f.blob);
+    const img=(f.tipo||'').startsWith('image/');
+    return `<div class="wcard" style="margin:0;padding:8px">
+      ${img?`<a href="${url}" target="_blank"><img src="${url}" style="width:100%;height:110px;object-fit:cover;border-radius:5px;border:1px solid var(--linha)"></a>`
+           :`<a href="${url}" target="_blank" style="display:flex;align-items:center;justify-content:center;height:110px;background:#F7F8F6;border-radius:5px;border:1px solid var(--linha);font-size:34px;text-decoration:none">${f.tipo==='application/pdf'?'📄':'📎'}</a>`}
+      <div style="margin-top:6px"><span class="tag ${f.cat}" style="font-size:9.5px;padding:1px 5px">${DCATLBL[f.cat]||f.cat}</span> <span style="font-family:var(--mono);font-size:10px;color:var(--ink2)">${f.mes||''}</span></div>
+      <div style="font-size:11.5px;font-weight:600;margin-top:2px;word-break:break-word">${f.desc||f.nome}</div>
+      <div style="font-size:10px;color:var(--ink2)">${f.nome} · ${tamH(f.tamanho||0)}</div>
+      <div style="margin-top:4px"><a class="mini" href="${url}" download="${f.nome}" style="text-decoration:none">⬇</a><button class="mini" data-delaq="${f.id}">🗑️</button></div>
+    </div>`;
+  }).join('')+'</div>';
+  el.querySelectorAll('[data-delaq]').forEach(b=>b.onclick=async()=>{
+    if(confirm('Apagar este documento do arquivo?')){ await idb.del(parseInt(b.dataset.delaq)); listarArq(); }
+  });
+}
+
+function barraPrazo(c){
+  const ini=c.dataInicio, fim=c.dataFimPrev, real=c.dataFimReal;
+  if(!ini && !fim && !real) return '';
+  const concl=!!c.concluida;
+  const hoje=new Date(); hoje.setHours(0,0,0,0);
+  const dI=ini?new Date(ini+'T00:00:00'):null;
+  const dF=fim?new Date(fim+'T00:00:00'):null;
+  const dR=real?new Date(real+'T00:00:00'):null;
+  const ref = dR ? dR : ((concl && dF) ? dF : hoje);
+  const dias=(a,b)=>Math.round((b-a)/86400000);
+  const fmtD=d=>d?d.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit',year:'numeric'}):'—';
+  let cartoes='', barra='';
+  const acabou = concl || !!dR;
+  if(dI){ const dec=dias(dI,ref); cartoes+=`<div class="card"><div class="k">Início</div><div class="v" style="font-size:16px">${fmtD(dI)}</div><div class="s">${acabou?dec+' dias de duração':(dec>=0?dec+' dias decorridos':'começa em '+(-dec)+' dias')}</div></div>`; }
+  if(dF){
+    if(acabou){ cartoes+=`<div class="card"><div class="k">Fim previsto</div><div class="v" style="font-size:16px">${fmtD(dF)}</div><div class="s">data prevista</div></div>`; }
+    else { const falta=dias(hoje,dF); const atras=falta<0; cartoes+=`<div class="card" style="border-left:4px solid ${atras?'var(--verm)':'var(--verde)'}"><div class="k">Fim previsto</div><div class="v" style="font-size:16px;color:${atras?'var(--verm)':'inherit'}">${fmtD(dF)}</div><div class="s">${atras?Math.abs(falta)+' dias em atraso':falta+' dias em falta'}</div></div>`; }
+  }
+  if(dR){
+    let sub='🏁 obra concluída';
+    if(dF){ const dif=dias(dF,dR); sub = dif===0 ? '🏁 acabou no prazo' : (dif<0 ? '🏁 '+Math.abs(dif)+' dias antes do previsto' : '🏁 '+dif+' dias depois do previsto'); }
+    const cor = dF && dias(dF,dR)>0 ? 'var(--laranja-esc)' : 'var(--verde)';
+    cartoes+=`<div class="card" style="border-left:4px solid ${cor}"><div class="k">Fim real</div><div class="v" style="font-size:16px;color:${cor}">${fmtD(dR)}</div><div class="s">${sub}</div></div>`;
+  } else if(concl && dF){
+    cartoes+=`<div class="card" style="border-left:4px solid var(--verde)"><div class="k">Fim real</div><div class="v" style="font-size:16px;color:var(--ink2)">—</div><div class="s">define na app Funcionários</div></div>`;
+  }
+  if(dI&&dF){ const tot=dias(dI,dF); const dec=Math.max(0,Math.min(tot,dias(dI,ref))); const pct=tot>0?Math.round(dec/tot*100):0; const atras=!acabou&&hoje>dF;
+    barra=`<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink2);margin-bottom:4px"><span>${acabou?'100% — concluída':pct+'% do prazo decorrido'}</span><span>${tot} dias de prazo total</span></div>
+      <div style="height:16px;background:var(--linha);border-radius:8px;overflow:hidden"><div style="height:100%;width:${acabou?100:Math.min(100,pct)}%;background:${acabou?'var(--verde)':atras?'var(--verm)':pct>85?'var(--laranja)':'var(--verde)'};border-radius:8px;transition:width .3s"></div></div></div>`;
+  }
+  return `<div style="margin-top:12px"><div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">${cartoes}</div>${barra}</div>`;
+}
+
+function rCfgFat(){
+  const c=DB.config;
+  const t1=c.tarifas[0], t2=c.tarifas[c.tarifas.length-1];
+  const somaT=t=>FASES.reduce((a,f)=>a+(t.precos[f]||0),0);
+  const lbl='style="display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"';
+  return `<div class="big"><div class="titulo">Obra e cliente</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <label ${lbl}>Nome da obra<input type="text" id="cObra" value="${c.obra}" style="width:200px"></label>
+      <label ${lbl}>Cliente<input type="text" id="cCli" value="${c.cliente}" style="width:320px"></label>
+      <label ${lbl}>Valor do contrato (= total do auto)<div style="font-family:var(--mono);font-size:18px;font-weight:800;color:var(--laranja-esc);padding:5px 0">${fmtEur(valorContratoAuto())}</div></label>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">
+      <label ${lbl}>Data de início<input type="date" id="cDataInicio" value="${c.dataInicio||''}" style="width:170px"></label>
+      <label ${lbl}>Fim previsto<input type="date" id="cDataFimPrev" value="${c.dataFimPrev||''}" style="width:170px"></label>
+      <button class="act" id="bSalvaDatas" style="align-self:flex-end">Guardar datas</button>
+    </div>
+    ${barraPrazo(c)}
+    <div class="note">As datas, o estado "concluída" e o fim real vêm sincronizados da app Funcionários. O valor do contrato é calculado automaticamente: faturável executado + pendente, aos preços do cliente.</div>
+  </div>
+
+  <div class="big"><div class="titulo">Fases da obra (nome, cor e estado)</div>
+    <div class="note" style="margin-top:0">As fases devem ser as mesmas da app Funcionários. Podes <b>anular</b> as fases que não usas nesta obra — desaparecem do auto, faturação e progresso. Só se podem anular fases sem trabalho lançado.</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      ${fasesCfg().map((fa,i)=>{ const anulada=fa.ativa===false; const temTrab=faseTemTrabalho(fa.id); return `<div style="display:flex;flex-direction:column;gap:3px;padding:8px;border:1px solid var(--linha);border-radius:8px;text-transform:none;${anulada?'opacity:.55;background:#F7F7F7':''}">
+        <span style="display:flex;align-items:center;gap:5px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"><input type="color" class="faseCor" data-i="${i}" value="${fa.cor}" style="width:28px;height:24px;padding:0;border:none;background:none;cursor:pointer"> Fase ${i+1}${anulada?' <span style="font-size:9px;color:var(--verm)">ANULADA</span>':''}</span>
+        <input type="text" class="faseNome" data-i="${i}" value="${fa.nome}" style="width:130px;font-weight:700" ${anulada?'disabled':''}>
+        <button class="mini" data-togglefase="${fa.id}" style="font-size:11px;text-align:left;color:${anulada?'var(--verde)':'var(--verm)'}">${anulada?'↺ Reativar fase':'⊘ Anular fase'}</button>
+        ${(!anulada&&temTrab)?`<span style="font-size:9px;color:var(--ink2)">tem trabalho lançado</span>`:''}
+      </div>`;}).join('')}
+    </div>
+    <div style="margin-top:8px"><button class="act" id="bSalvaFases">Guardar nomes das fases</button></div>
+  </div>
+
+  <div class="big"><div class="titulo">Tarifas do cliente (€/m²)</div>
+    <div style="border:1px dashed var(--linha);border-radius:6px;padding:10px;margin-bottom:10px">
+      <div class="note" style="margin:0 0 6px"><b>Tarifa 1 — até (inclusive):</b></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+        <label ${lbl}>Até mês<input type="text" id="t1Ate" value="${t1.ate}" placeholder="2026-04" style="width:95px"></label>
+        ${[...FASES,'HORAS'].map(f=>`<label ${lbl}>${f==='HORAS'?'<span class="tagF" style="background:#7772;color:#777;font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px">HORAS</span>':tagFase(f)}<input type="number" step="0.01" id="t1P_${f}" value="${t1.precos[f]||0}" style="width:85px"></label>`).join('')}
+        <label ${lbl}>Retenção %<input type="number" step="0.01" id="t1Ret" value="${t1.ret}" style="width:75px"></label>
+        <span style="font-family:var(--mono);font-weight:800;color:var(--laranja-esc)">= ${fmtN(somaT(t1))} €/m²</span>
+      </div>
+    </div>
+    <div style="border:1px dashed var(--linha);border-radius:6px;padding:10px">
+      <div class="note" style="margin:0 0 6px"><b>Tarifa 2 — daí em diante:</b></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+        ${[...FASES,'HORAS'].map(f=>`<label ${lbl}>${f==='HORAS'?'<span class="tagF" style="background:#7772;color:#777;font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px">HORAS</span>':tagFase(f)}<input type="number" step="0.01" id="t2P_${f}" value="${t2.precos[f]||0}" style="width:85px"></label>`).join('')}
+        <label ${lbl}>Retenção %<input type="number" step="0.01" id="t2Ret" value="${t2.ret}" style="width:75px"></label>
+        <span style="font-family:var(--mono);font-weight:800;color:var(--laranja-esc)">= ${fmtN(somaT(t2))} €/m²</span>
+      </div>
+    </div>
+    <div class="bar" style="margin-top:10px"><button class="act" id="bCfg">Guardar configuração de faturação</button></div>
+  </div>`;
+}
+
+function rCfgCus(){
+  const lbl='style="display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);font-weight:600"';
+  return `<div class="big"><div class="titulo">Encargos sobre salários sincronizados</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+      <label ${lbl}>Encargos entidade patronal %<input type="number" step="0.01" id="cuEnc" value="${DB.config.encargosPct}" style="width:90px;font-size:15px;font-weight:700"></label>
+      <button class="act" id="bEnc">Aplicar</button>
+    </div>
+    <div class="note">Custo salários = valor pago à equipa (dos autos) <b>+ ${DB.config.encargosPct}%</b> de Seg. Social, seguros e outros encargos da empresa. Ao mudares a %, todos os meses sincronizados são recalculados. Confirma a percentagem certa com o teu contador.</div>
+    <div class="note">Categorias de custos disponíveis: ${CATS.map(ct=>`<span class="tag ${ct}">${CATLBL[ct]}</span>`).join(' ')} — os custos registam-se no <b>Custos</b>.</div>
+  </div>
+  <div class="big"><div class="titulo">Custos indiretos (% sobre faturação)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+      <label ${lbl}>Custos indiretos %<input type="number" step="0.01" id="cuInd" value="${DB.config.indiretosPct||0}" style="width:90px;font-size:15px;font-weight:700"></label>
+      <button class="act" id="bInd">Aplicar</button>
+    </div>
+    <div class="note">Percentagem automática sobre a <b>faturação mensal</b> para cobrir custos indiretos da empresa: <b>seguros, contabilidade, escritório, telemóveis</b>. É um valor calculado (não aparece na lista de custos) e desconta-se à margem. Ex: 10% sobre 50.000€ faturados = 5.000€ de custos indiretos.</div>
+  </div>`;
+}
+
+function rDados(){
+  return `<div class="big" style="border-left:4px solid var(--verde)"><div class="titulo">Gestão de obras (${STORE.obras.length})</div>
+    <div class="scroll"><table style="font-size:13px"><tr><th>Obra</th><th class="n">Zonas</th><th></th></tr>
+    ${STORE.obras.map(o=>`<tr style="${o.id===STORE.ativa?'background:#F0F7F3':''}">
+      <td><b>${o.nome}</b>${o.id===STORE.ativa?' <span style="font-size:10px;color:var(--verde)">● ativa</span>':''}${(o.db&&o.db.config&&o.db.config.concluida)?' <span style="font-size:10px;color:var(--ink2)">🏁 concluída</span>':''}</td>
+      <td class="n">${(o.db.zones||[]).length}</td>
+      <td style="white-space:nowrap">
+        ${o.id!==STORE.ativa?`<button class="mini" data-abrirobra="${o.id}" style="color:var(--verde)">Abrir</button>`:''}
+        <button class="mini" data-renomearobra="${o.id}">✏️ Renomear</button>
+        <button class="mini" data-duplicarobra="${o.id}" title="Duplicar só a configuração (sem zonas nem custos)">⎘ config</button>
+        <button class="mini" data-duptudo="${o.id}" title="Duplicar TUDO (cópia exata: zonas, custos, certificações)" style="color:var(--laranja-esc)">📋 tudo</button>
+        ${STORE.obras.length>1?`<button class="mini" data-apagarobra="${o.id}" style="color:var(--verm)">🗑️ Apagar</button>`:''}
+      </td></tr>`).join('')}
+    </table></div>
+    <div class="bar" style="margin:10px 0 0"><button class="sec" id="bReporEmbutido">↺ Repor dados embutidos (18/06)</button></div>
+    <div class="note">Cada obra é independente: zonas, tarifas, custos e fases próprios. Para <b>criar</b> uma obra, usa o botão <b>+ Obra</b> no topo. Para <b>trocar</b>, usa os botões das obras na barra "Todas as obras".</div>
+  </div>
+
+  <div class="big"><div class="titulo" style="display:flex;justify-content:space-between;align-items:center">Histórico de alterações <button class="act" id="bHist" style="font-size:11px;padding:3px 10px">${histAberto?'▲ Ocultar':'▼ Mostrar ('+(DB.histCfg||[]).length+')'}</button></div>
+    ${histAberto?`<div class="scroll"><table><tr><th style="width:140px">Quando</th><th>Alteração</th></tr>
+    ${(DB.histCfg||[]).map(r=>`<tr><td style="font-family:var(--mono);font-size:12px">${r.ts}</td><td>${r.txt}</td></tr>`).join('')||'<tr><td colspan="2" style="color:var(--ink2)">Sem alterações registadas.</td></tr>'}
+    </table></div>`:'<div class="note" style="margin:0">Histórico oculto. Carrega em "Mostrar" para ver as alterações.</div>'}
+  </div>
+
+  <div class="big"><div class="titulo">Dados</div>
+    <div class="bar" style="margin:0">
+      <button class="act" id="bSyncIn">⇄ Importar autos da app Funcionários</button>
+      <input type="file" id="syncFile" accept=".json" style="display:none">
+      <button class="sec" id="bExp">⬇ Exportar cópia de segurança (JSON)</button>
+      <button class="sec" id="bImp">⬆ Importar dados</button>
+      <button class="sec" id="bLimpar" style="color:var(--verm)">🧹 Limpar autos (começar do zero)</button>
+      <button class="sec" id="bReset" style="color:var(--verm)">Repor dados iniciais</button>
+      <input type="file" id="impFile" accept=".json" style="display:none">
+    </div>
+    <div class="note">A sincronização traz zonas, fases concluídas, horas e salários da app Funcionários, sem apagar nada.</div>
+  </div>`;
+}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); tab=b.dataset.t; editId=null; render();
+});
+function impSyncPacote(p){
+  try{
+    // aviso se a obra do pacote não corresponde à obra ativa
+    const norm0=s=>String(s||'').toUpperCase().replace(/\s+/g,' ').trim();
+    const obraPac=norm0(p.obra), obraAtu=norm0(DB.config.obra);
+    if(obraPac && obraAtu && obraPac!==obraAtu){
+      if(!confirm('⚠ ATENÇÃO — obras diferentes!\n\nO ficheiro é da obra "'+p.obra+'", mas a obra ativa aqui é "'+DB.config.obra+'".\n\nSe continuares, os autos da obra "'+p.obra+'" vão entrar na obra "'+DB.config.obra+'".\n\nTroca primeiro para a obra certa no seletor do topo, ou continua se for mesmo isto que queres.\n\nOK = importar mesmo assim · Cancelar = parar')) return;
+    }
+    if(p.fasesCfg&&p.fasesCfg.length){ DB.config.fases=p.fasesCfg; }
+    if(p.concluida!==undefined){ DB.config.concluida=!!p.concluida; }
+    if(p.dataInicio!==undefined){ DB.config.dataInicio=p.dataInicio||''; }
+    if(p.dataFimPrev!==undefined){ DB.config.dataFimPrev=p.dataFimPrev||''; }
+    if(p.dataFimReal!==undefined){ DB.config.dataFimReal=p.dataFimReal||''; }
+    const norm=s=>String(s||'').toUpperCase().replace(/\s+/g,' ').trim();
+    let atual=0, novas=0, fasesNovas=0, anuladas=0, removidas=0;
+    const vistas=new Set();
+    p.zones.forEach(sz=>{
+      let z=DB.zones.find(x=>norm(x.desc)===norm(sz.desc)&&Math.abs(x.area-sz.area)<0.05);
+      if(!z){
+        z={id:DB.nextZoneId++,desc:sz.desc,comp:sz.comp,alt:sz.alt,area:sz.area,dataAuto:sz.dataAuto||'',fases:Object.fromEntries(FASES.map(f=>[f,null]))};
+        DB.zones.push(z); novas++;
+      }
+      vistas.add(z.id);
+      let mudou=false;
+      if(!!sz.anulada !== !!z.anulada){ z.anulada=!!sz.anulada; mudou=true; anuladas++; }
+      FASES.forEach(ff=>{
+        const src=sz.fases[ff];
+        if(src&&src.anulada){
+          if(!z.fases[ff]||!z.fases[ff].anulada){ z.fases[ff]={anulada:true}; mudou=true; anuladas++; }
+        } else if(src&&src.mes){
+          if(!z.fases[ff]||z.fases[ff].mes!==src.mes||z.fases[ff].anulada){ z.fases[ff]={mes:src.mes}; mudou=true; fasesNovas++; }
+        } else {
+          if(z.fases[ff]&&z.fases[ff].anulada){ z.fases[ff]=null; mudou=true; }
+        }
+      });
+      if(mudou) atual++;
+    });
+    // remover zonas que JÁ NÃO vêm no pacote (foram eliminadas na app Funcionários).
+    // Todas as zonas da Empresa vêm da sincronização, por isso uma zona que não está
+    // no pacote significa que foi apagada na origem e deve sair também aqui.
+    const antesRem=DB.zones.length;
+    DB.zones=DB.zones.filter(z=>vistas.has(z.id));
+    removidas=antesRem-DB.zones.length;
+    let horasNovas=0;
+    (p.extras||[]).forEach(se=>{
+      if(!DB.extras.find(x=>norm(x.desc)===norm(se.desc)&&x.mes===se.mes&&Math.abs(x.area-se.area)<0.01)){
+        DB.extras.push({id:DB.nextExtraId++,desc:se.desc,area:se.area,mes:se.mes}); horasNovas++;
+      }
+    });
+    let salariosAtu=0;
+    // os salários "auto" passam a ser EXATAMENTE os que vêm no pacote.
+    // assim, se anulaste fases nos Funcionários e o salário de um mês baixou ou
+    // desapareceu, a Empresa reflete isso (remove os meses que já não vêm).
+    if(p.salarios){
+      DB.custos = DB.custos.filter(x=> !(x.auto && x.cat==='SALARIOS') );
+      (p.salarios||[]).forEach(s=>{
+        DB.custos.push({id:DB.nextCustoId++,mes:s.mes,cat:'SALARIOS',desc:'',valorBase:s.valor,valor:0,data:'',auto:true});
+        salariosAtu++;
+      });
+    }
+    let equipAtu=0;
+    // compatibilidade: formato antigo (só equipamentos) — também substitui totalmente
+    if(p.equipamentos){
+      DB.custos = DB.custos.filter(x=> !(x.auto && !x.partilhado && x.cat==='EQUIPAMENTO') );
+      (p.equipamentos||[]).forEach(s=>{
+        DB.custos.push({id:DB.nextCustoId++,mes:s.mes,cat:'EQUIPAMENTO',desc:'Equipamentos/materiais (sincronizado)',valorBase:s.valor,valor:s.valor,data:'',auto:true});
+        equipAtu++;
+      });
+    }
+    // novo formato: custos partilhados (deslocação/alojamento/refeições/equipamento), por categoria e mês
+    const lblPart={TRANSPORTES:'Deslocações',ALOJAMENTO:'Alojamento',OUTROS:'Custos gerais',EQUIPAMENTO:'Equipamentos'};
+    const catsPart=['TRANSPORTES','ALOJAMENTO','OUTROS','EQUIPAMENTO'];
+    // primeiro, remover os custos auto-partilhados antigos destas categorias (vão ser repostos com os valores novos)
+    // (assim, se um valor baixou ou desapareceu, fica certo)
+    if(p.custosPartilhados){
+      DB.custos = DB.custos.filter(x=> !(x.auto && x.partilhado && catsPart.includes(x.cat)) );
+      (p.custosPartilhados||[]).forEach(s=>{
+        const cat=catsPart.includes(s.cat)?s.cat:'OUTROS';
+        DB.custos.push({id:DB.nextCustoId++,mes:s.mes,cat,desc:(lblPart[cat]||'Custo')+' (partilhado, sincronizado)',valorBase:s.valor,valor:s.valor,data:'',auto:true,partilhado:true});
+        equipAtu++;
+      });
+    }
+    recalcSalarios();
+    registaCfg('Sincronização da app Funcionários ('+(p.exportado||'')+'): '+novas+' zonas novas · '+fasesNovas+' fases atualizadas · '+anuladas+' anulações · '+removidas+' zonas removidas · '+horasNovas+' horas · '+salariosAtu+' meses de salários · '+equipAtu+' custos partilhados');
+    save(); render();
+    alert('Sincronizado!\n\n'+novas+' zonas novas\n'+fasesNovas+' fases concluídas atualizadas\n'+anuladas+' fases/linhas anuladas\n'+(removidas>0?removidas+' zonas removidas (eliminadas nos Funcionários)\n':'')+horasNovas+' registos de horas novos\n'+salariosAtu+' meses de salários\n'+equipAtu+' linhas de custos partilhados (deslocação, alojamento, equipamentos)\n\nAs zonas passam a ser exatamente as que vêm da app Funcionários.');
+  }catch(x){ alert('Erro ao sincronizar: '+x.message); }
+}
+function bind(){
+  const $=id=>document.getElementById(id);
+  if($('bNovaObra2')) $('bNovaObra2').onclick=()=>{ const nome=prompt('Nome da nova obra:'); if(nome===null)return; criarObra(nome.trim()||'Nova obra'); };
+  if($('bReporEmbutido')) $('bReporEmbutido').onclick=()=>{
+    if(!confirm('Repor as obras com os dados embutidos de 18/06 (92 Vivendas + Residência Est)?\n\nISTO SUBSTITUI tudo o que está agora guardado no browser. Usa isto se a app não carregou os dados certos.\n\nExporta uma cópia de segurança antes, se tiveres trabalho recente que não queiras perder.')) return;
+    STORE = JSON.parse(JSON.stringify(STORE_INICIAL));
+    STORE.obras.forEach(o=>o.db=repararDB(o.db));
+    if(!STORE.obras.find(o=>o.id===STORE.ativa)) STORE.ativa=STORE.obras[0].id;
+    DB=obraAtiva().db; save(); render();
+    alert('Dados repostos: '+STORE.obras.map(o=>o.nome+' ('+o.db.zones.length+'z)').join(', '));
+  };
+  document.querySelectorAll('[data-abrirobra]').forEach(b=>b.onclick=()=>trocarObra(b.getAttribute('data-abrirobra')));
+  document.querySelectorAll('[data-renomearobra]').forEach(b=>b.onclick=()=>{ const id=b.getAttribute('data-renomearobra'); const o=STORE.obras.find(x=>x.id===id); const nome=prompt('Novo nome da obra:', o?o.nome:''); if(nome===null)return; renomearObra(id,nome.trim()||o.nome); });
+  document.querySelectorAll('[data-duplicarobra]').forEach(b=>b.onclick=()=>{ if(confirm('Duplicar esta obra? Copia a configuração (tarifas, fases) mas começa sem zonas nem custos.')) duplicarObra(b.getAttribute('data-duplicarobra')); });
+  document.querySelectorAll('[data-duptudo]').forEach(b=>b.onclick=()=>{ if(confirm('Duplicar esta obra com TUDO? Cópia exata: zonas, tarifas, fases, custos e certificações.\n\nFica uma obra nova igual à original, que podes depois renomear e editar.')) duplicarObraTudo(b.getAttribute('data-duptudo')); });
+  document.querySelectorAll('[data-apagarobra]').forEach(b=>b.onclick=()=>{ const id=b.getAttribute('data-apagarobra'); const o=STORE.obras.find(x=>x.id===id); if(confirm('APAGAR a obra "'+(o?o.nome:'')+'" e todos os seus dados? Isto não se desfaz.\n\nExporta uma cópia de segurança antes, se precisares.')) apagarObra(id); });
+  if($('bH')) $('bH').onclick=()=>{
+    const desc=$('hDesc').value.trim();
+    const qtd=parseFloat($('hQtd').value)||0;
+    const mes=$('hMes').value.trim();
+    const preco=parseFloat($('hPreco').value)||0;
+    if(qtd<=0){ alert('Indica o número de horas (maior que zero).'); return; }
+    if(!mes.match(/^\d{4}-\d{2}$/)){ alert('Indica o mês no formato AAAA-MM (ex: 2026-06).'); return; }
+    const avisos=[];
+    if(!desc) avisos.push('• Sem descrição.');
+    if(preco<=0) avisos.push('• Preço €/h a zero (não fatura nada).');
+    if(avisos.length && !confirm('Atenção:\n\n'+avisos.join('\n')+'\n\nRegistar mesmo assim?')) return;
+    if(!DB.extras) DB.extras=[];
+    DB.extras.push({id:DB.nextExtraId++,desc:desc||'Horas',area:qtd,preco,mes});
+    registaCfg('Horas avulsas: '+(desc||'Horas')+' ('+fmtN(qtd)+'h, '+mes+')');
+    save(); render();
+  };
+  document.querySelectorAll('[data-delh]').forEach(b=>b.onclick=()=>{ if(confirm('Apagar este registo de horas?')){ DB.extras=DB.extras.filter(e=>e.id!==parseInt(b.getAttribute('data-delh'))); save(); render(); }});
+  document.querySelectorAll('[data-togglefase]').forEach(b=>b.onclick=()=>{
+    const id=b.getAttribute('data-togglefase');
+    const fa=fasesCfg().find(x=>x.id===id); if(!fa)return;
+    if(fa.ativa===false){ fa.ativa=true; registaCfg('Fase reativada: '+fa.nome); save(); render(); return; }
+    if(faseTemTrabalho(id)){ alert('Não podes anular a fase '+fa.nome+': tem trabalho lançado em pelo menos uma zona. Apaga ou muda esse trabalho primeiro, depois anula a fase.'); return; }
+    fa.ativa=false; registaCfg('Fase anulada: '+fa.nome); save(); render();
+  });
+  if($('bSalvaFases')) $('bSalvaFases').onclick=()=>{
+    const fs=fasesCfg();
+    document.querySelectorAll('.faseNome').forEach(el=>{ const i=+el.getAttribute('data-i'); if(fs[i]) fs[i].nome=el.value.trim()||fs[i].nome; });
+    document.querySelectorAll('.faseCor').forEach(el=>{ const i=+el.getAttribute('data-i'); if(fs[i]) fs[i].cor=el.value; });
+    DB.config.fases=fs; registaCfg('Nomes/cores das fases atualizados: '+fs.map(f=>f.nome).join(', ')); save(); render();
+  };
+  if($('bHist')) $('bHist').onclick=()=>{ histAberto=!histAberto; render(); };
+  if($('fMes')) $('fMes').onchange=e=>{filtroMes=e.target.value;render();};
+  if($('fFase')) $('fFase').onchange=e=>{filtroFase=e.target.value;render();};
+  if($('bNovo')) $('bNovo').onclick=()=>{editId='new';render();};
+  document.querySelectorAll('[data-gmes]').forEach(tr=>tr.onclick=()=>{ const mk=tr.getAttribute('data-gmes'); const map=autoMesFechadoMap(); map[mk]=!map[mk]; save(); render(); });
+  if($('bAutoFecharTudo')) $('bAutoFecharTudo').onclick=()=>{
+    const map=autoMesFechadoMap();
+    const mks=[...new Set(DB.zones.map(z=>(z.dataAuto||'').slice(0,7)||'sem'))];
+    const todosFech = mks.length>0 && mks.every(mk=>map[mk]);
+    if(todosFech){ mks.forEach(mk=>delete map[mk]); } else { mks.forEach(mk=>map[mk]=true); }
+    save(); render();
+  };
+  const autoArea=()=>{ const c=parseFloat($('zComp').value)||0, a=parseFloat($('zAlt').value)||0; if(c&&a) $('zArea').value=(c*a).toFixed(3); };
+  if($('zComp')) $('zComp').oninput=autoArea;
+  if($('zAlt')) $('zAlt').oninput=autoArea;
+  document.querySelectorAll('.fOn').forEach(c=>c.onchange=()=>{
+    document.querySelector(`.fMesI[data-f="${c.dataset.f}"]`).disabled=!c.checked;
+  });
+  if($('bCancIt')) $('bCancIt').onclick=()=>{editId=null;render();};
+  if($('bGuardarZ')) $('bGuardarZ').onclick=()=>{
+    const desc=$('zDesc').value.trim(), area=parseFloat($('zArea').value)||0;
+    if(!desc){alert('Preenche a descrição da zona.');return;}
+    const fases={}; let erro=null; const semTarifa=[];
+    FASES.forEach(f=>{
+      const on=document.querySelector(`.fOn[data-f="${f}"]`).checked;
+      if(!on){ fases[f]=null; return; }
+      const mes=document.querySelector(`.fMesI[data-f="${f}"]`).value.trim();
+      if(!mes.match(/^\d{4}-\d{2}$/)){ erro=`Mês inválido na fase ${faseNome(f)} (formato AAAA-MM).`; return; }
+      const tar=(tarifaDoMes(mes).precos[f]||0);
+      if(tar<=0){ semTarifa.push(faseNome(f)); }
+      fases[f]={mes};
+    });
+    if(erro){alert(erro);return;}
+    const avisos=[];
+    if(!area || area<=0) avisos.push('• A ÁREA (m²) está vazia ou a zero.');
+    if(semTarifa.length) avisos.push('• Sem tarifa do cliente (fica a 0 €/m²) nestas fases concluídas: '+semTarifa.join(', ')+'. Define as tarifas na Configuração.');
+    if(avisos.length){
+      if(!confirm('Atenção antes de guardar:\n\n'+avisos.join('\n')+'\n\nQueres guardar a zona mesmo assim?')) return;
+    }
+    const o={desc,comp:parseFloat($('zComp').value)||0,alt:parseFloat($('zAlt').value)||0,area,dataAuto:$('zData').value||'',fases};
+    if(editId==='new'){ o.id=DB.nextZoneId++; DB.zones.push(o); }
+    else{ Object.assign(DB.zones.find(x=>x.id===editId),o); }
+    editId=null; save(); render();
+  };
+  const lbAtualiza=()=>{ const sel=document.querySelectorAll('.lbSel:checked'); const inf=$('lbInfo');
+    if(inf){ let s=0; sel.forEach(c=>{const z=DB.zones.find(x=>x.id===parseInt(c.dataset.z)); if(z)s+=z.area;}); inf.textContent=sel.length+' zonas · '+fmtN(s)+' m²'; } };
+  document.querySelectorAll('.lbSel').forEach(c=>c.onchange=lbAtualiza);
+  if($('bLote')) $('bLote').onclick=()=>{
+    const sel=[...document.querySelectorAll('.lbSel:checked')].map(c=>parseInt(c.dataset.z));
+    if(!sel.length){alert('Seleciona pelo menos uma zona.');return;}
+    const fase=$('lbFase').value, mes=$('lbMes').value.trim();
+    if(!mes.match(/^\d{4}-\d{2}$/)){alert('Mês no formato AAAA-MM.');return;}
+    let n=0,s=0;
+    sel.forEach(id=>{ const z=DB.zones.find(x=>x.id===id); if(z&&(!z.fases[fase]||!z.fases[fase].mes)){ z.fases[fase]={mes}; n++; s+=z.area; } });
+    registaCfg('Lote: '+n+' zonas com '+fase+' marcado em '+mes+' ('+fmtN(s)+' m²)');
+    save(); render();
+    alert(n+' zonas marcadas ('+fmtN(s)+' m²) com '+fase+' em '+mes+'.');
+  };
+  document.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>{editId=parseInt(b.dataset.ed);window.__irAoTopo=true;window.__irAoTopo2=true;render();});
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ if(confirm('Apagar esta zona e todas as suas fases?')){ DB.zones=DB.zones.filter(x=>x.id!==parseInt(b.dataset.del)); save(); render(); }});
+  document.querySelectorAll('[data-toggle-zona]').forEach(b=>b.onclick=()=>{
+    const z=DB.zones.find(x=>x.id===parseInt(b.getAttribute('data-toggle-zona'))); if(!z) return;
+    if(z.anulada){ z.anulada=false; registaCfg('Linha reativada: "'+z.desc+'"'); }
+    else{
+      const temConcluido=FASES.some(f=>z.fases[f]&&z.fases[f].mes);
+      if(temConcluido && !confirm('Esta zona tem fases concluídas. Anular a LINHA INTEIRA? Deixa de contar no faturável (mas não é apagada).')) return;
+      z.anulada=true; registaCfg('Linha ANULADA: "'+z.desc+'"');
+    }
+    save(); render();
+  });
+  document.querySelectorAll('[data-toggleanul]').forEach(b=>b.onclick=()=>{
+    const [id,f]=b.getAttribute('data-toggleanul').split('|');
+    const z=DB.zones.find(x=>x.id===parseInt(id)); if(!z) return;
+    const fd=z.fases[f];
+    if(fd&&fd.anulada){ z.fases[f]=fd.anterior||null; registaCfg('Fase '+f+' reativada em "'+z.desc+'"'); }
+    else{
+      if(fd&&fd.mes){ if(!confirm('Esta fase está concluída ('+fd.mes+'). Anular? Deixa de contar no faturável (podes reativar depois).')) return; }
+      z.fases[f]={anulada:true, anterior:(fd&&fd.mes)?fd:null};
+      registaCfg('Fase '+f+' ANULADA em "'+z.desc+'"');
+    }
+    save(); render();
+  });
+  document.querySelectorAll('.fatLinha').forEach(tr=>tr.onclick=()=>{
+    const mes=tr.dataset.fatmes;
+    DB.config._fatAberto = (DB.config._fatAberto===mes) ? '' : mes;
+    save(); render();
+  });
+  document.querySelectorAll('.retExtraCel').forEach(td=>td.onclick=(ev)=>{
+    ev.stopPropagation();
+    const mes=td.dataset.rxmes;
+    if(!DB.config.retExtra) DB.config.retExtra={};
+    const atual=DB.config.retExtra[mes]||{};
+    const v=prompt('Retenção EXTRA pontual para '+mesLbl(mes)+'\n\nValor a reter neste mês, em € (desconto definitivo).\nDeixa vazio ou 0 para remover.', atual.valor||'');
+    if(v===null) return;
+    const valor=parseFloat(String(v).replace(',','.'))||0;
+    if(valor<=0){
+      delete DB.config.retExtra[mes];
+      registaCfg('Retenção extra removida em '+mesLbl(mes));
+    } else {
+      const nota=prompt('Motivo/nota desta retenção (opcional):', atual.nota||'')||'';
+      DB.config.retExtra[mes]={valor, nota:nota.trim()};
+      registaCfg('Retenção extra em '+mesLbl(mes)+': −'+fmtEur(valor)+(nota.trim()?' ('+nota.trim()+')':''));
+    }
+    save(); render();
+  });
+  if($('bCt')) $('bCt').onclick=()=>{
+    const mes=$('ctMes').value.trim(), num=$('ctNum').value.trim();
+    const base=parseFloat($('ctBase').value)||0, receb=parseFloat($('ctReceb').value)||0;
+    if(!mes.match(/^\d{4}-\d{2}$/)||!num||!base){alert('Preenche mês (AAAA-MM), nº de documento e valor base.');return;}
+    DB.certs.push({id:DB.nextCertId++,mes,num,base,recebido:receb,data:$('ctData').value||hoje(),nota:$('ctNota').value.trim()});
+    save(); render();
+  };
+  document.querySelectorAll('[data-delct]').forEach(b=>b.onclick=()=>{ if(confirm('Apagar esta certificação?')){ DB.certs=DB.certs.filter(c=>c.id!==parseInt(b.dataset.delct)); save(); render(); }});
+  document.querySelectorAll('[data-edct]').forEach(b=>b.onclick=()=>{
+    const c=DB.certs.find(x=>x.id===parseInt(b.dataset.edct));
+    const r=prompt('Valor recebido para '+c.num+' (base '+fmtEur(c.base)+'):', c.recebido||'');
+    if(r===null) return;
+    const v=parseFloat(String(r).replace(',','.'));
+    if(isNaN(v)||v<0){alert('Valor inválido.');return;}
+    c.recebido=v; save(); render();
+  });
+  if($('fMesCu')) $('fMesCu').onchange=ev=>{filtroMes=ev.target.value;render();};
+  if($('bInd')) $('bInd').onclick=()=>{
+    const p=parseFloat($('cuInd').value);
+    if(isNaN(p)||p<0){alert('Percentagem inválida.');return;}
+    const atual=DB.config.indiretosPct||0;
+    if(p!==atual){
+      registaCfg('Custos indiretos '+atual+'% → '+p+'% (sobre faturação)');
+      DB.config.indiretosPct=p;
+      save(); render();
+    }
+  };
+  if($('bEnc')) $('bEnc').onclick=()=>{
+    const p=parseFloat($('cuEnc').value);
+    if(isNaN(p)||p<0){alert('Percentagem inválida.');return;}
+    if(p!==DB.config.encargosPct){
+      registaCfg('Encargos sobre salários '+DB.config.encargosPct+'% → '+p+'%');
+      DB.config.encargosPct=p;
+      recalcSalarios();
+      save(); render();
+    }
+  };
+  if($('bModoPN')) $('bModoPN').onclick=()=>{ $('alojPN').style.display='flex'; $('alojFixo').style.display='none'; $('bModoPN').style.background='#F2E8E3'; $('bModoPN').style.color='#8A5A3D'; $('bModoFixo').style.background=''; $('bModoFixo').style.color=''; };
+  if($('bModoFixo')) $('bModoFixo').onclick=()=>{ $('alojPN').style.display='none'; $('alojFixo').style.display='flex'; $('bModoFixo').style.background='#F2E8E3'; $('bModoFixo').style.color='#8A5A3D'; $('bModoPN').style.background=''; $('bModoPN').style.color=''; };
+  if($('bAlojFixo')) $('bAlojFixo').onclick=()=>{
+    const val=parseFloat($('afVal').value)||0; const de=$('afDe').value.trim(); const ate=$('afAte').value.trim();
+    let desc=$('afDesc').value.trim()||'Renda alojamento';
+    if(!de.match(/^\d{4}-\d{2}$/)||!ate.match(/^\d{4}-\d{2}$/)){alert('Preenche mês inicial e final no formato AAAA-MM.');return;}
+    if(val<=0){alert('Preenche a renda €/mês (maior que 0).');return;}
+    if(ate<de){alert('O mês final não pode ser anterior ao inicial.');return;}
+    // gerar lista de meses do intervalo
+    const meses=[]; let [ay,am]=de.split('-').map(Number); const [fy,fm]=ate.split('-').map(Number);
+    while(ay<fy || (ay===fy && am<=fm)){ meses.push(ay+'-'+String(am).padStart(2,'0')); am++; if(am>12){am=1;ay++;} if(meses.length>60)break; }
+    if(!confirm('Registar '+fmtEur(val)+' de alojamento em '+meses.length+' meses ('+meses[0]+' a '+meses[meses.length-1]+')?\n\nTotal: '+fmtEur(val*meses.length))) return;
+    meses.forEach(m=>{ DB.custos.push({id:DB.nextCustoId++,mes:m,cat:'ALOJAMENTO',desc:desc+' (renda fixa)',valor:val,data:''}); });
+    registaCfg('Alojamento renda fixa: '+fmtEur(val)+'/mês × '+meses.length+' meses = '+fmtEur(val*meses.length));
+    save(); render();
+  };
+  if($('bAloj')) $('bAloj').onclick=()=>{
+    const mes=$('alMes').value.trim(); const pes=parseFloat($('alPes').value)||0; const noites=parseFloat($('alNoites').value)||0; const preco=parseFloat($('alPreco').value)||0;
+    let desc=$('alDesc').value.trim();
+    const total=Math.round(pes*noites*preco*100)/100;
+    if(!mes.match(/^\d{4}-\d{2}$/)){alert('Preenche o mês (AAAA-MM).');return;}
+    if(total<=0){alert('Verifica os valores: pessoas, noites e €/pessoa/noite têm de dar um total maior que 0.');return;}
+    if(!desc) desc='Alojamento';
+    desc+=' ('+pes+' pessoas × '+noites+' noites × '+fmtEur(preco)+')';
+    DB.custos.push({id:DB.nextCustoId++,mes,cat:'ALOJAMENTO',desc,valor:total,data:''});
+    registaCfg('Alojamento calculado: '+fmtEur(total)+' ('+mes+')');
+    save(); render();
+  };
+  if($('bDesl')) $('bDesl').onclick=()=>{
+    const mes=$('dsMes').value.trim(); const viag=parseFloat($('dsViag').value)||0; const km=parseFloat($('dsKm').value)||0; const preco=parseFloat($('dsPreco').value)||0; const extra=parseFloat($('dsExtra').value)||0;
+    let desc=$('dsDesc').value.trim();
+    const total=Math.round((viag*km*preco+extra)*100)/100;
+    if(!mes.match(/^\d{4}-\d{2}$/)){alert('Preenche o mês (AAAA-MM).');return;}
+    if(total<=0){alert('Verifica os valores: viagens, km e €/km têm de dar um total maior que 0.');return;}
+    if(!desc) desc='Deslocações';
+    desc+=' ('+viag+' viagens × '+fmtN(km)+'km × '+fmtEur(preco)+(extra>0?' + '+fmtEur(extra)+' extras':'')+')';
+    DB.custos.push({id:DB.nextCustoId++,mes,cat:'TRANSPORTES',desc,valor:total,data:''});
+    registaCfg('Deslocações calculadas: '+fmtEur(total)+' ('+mes+')');
+    save(); render();
+  };
+  // guardar o estado dos campos do registo manual sempre que mudam (evita perder a categoria em re-renders)
+  document.querySelectorAll('[data-delcu]').forEach(b=>b.onclick=()=>{ if(confirm('Apagar este custo?')){ DB.custos=DB.custos.filter(x=>x.id!==parseInt(b.dataset.delcu)); save(); render(); }});
+  document.querySelectorAll('[data-edcu]').forEach(b=>b.onclick=()=>{
+    const x=DB.custos.find(y=>y.id===parseInt(b.dataset.edcu));
+    const ehSalario = x.cat==='SALARIOS';
+    const atual = ehSalario ? (x.valorBase!=null?x.valorBase:x.valor) : x.valor;
+    const r=prompt((ehSalario?'Valor BASE (bruto recibo, sem encargos) para "':'Novo valor para "')+x.desc+'" ('+x.mes+'):', atual);
+    if(r===null) return;
+    const v=parseFloat(String(r).replace(',','.'));
+    if(isNaN(v)||v<=0){alert('Valor inválido.');return;}
+    if(ehSalario){ const p=DB.config.encargosPct||0; x.valorBase=v; x.valor=Math.round(v*(1+p/100)*100)/100; }
+    else { x.valor=v; }
+    save(); render();
+  });
+  if($('bCfg')) $('bCfg').onclick=()=>{
+    const c=DB.config; const muda=[];
+    const lerT=(pref,t,nome)=>{
+      [...FASES,'HORAS'].forEach(f=>{
+        const v=parseFloat($(pref+'P_'+f).value)||0;
+        if(v!==t.precos[f]){ muda.push(nome+' '+f+' '+fmtN(t.precos[f])+' → '+fmtN(v)+' €'); t.precos[f]=v; }
+      });
+      const r=parseFloat($(pref+'Ret').value)||0;
+      if(r!==t.ret){ muda.push(nome+' retenção '+t.ret+'% → '+r+'%'); t.ret=r; }
+    };
+    const t1=c.tarifas[0], t2=c.tarifas[c.tarifas.length-1];
+    const nAte=$('t1Ate').value.trim();
+    if(nAte!==t1.ate){ if(nAte && !nAte.match(/^\d{4}-\d{2}$/)){alert('Mês limite da tarifa 1 no formato AAAA-MM.');return;} muda.push('Tarifa 1 até '+(t1.ate||'—')+' → '+(nAte||'—')); t1.ate=nAte; }
+    lerT('t1',t1,'Tarifa 1'); lerT('t2',t2,'Tarifa 2');
+    c.obra=$('cObra').value.trim(); c.cliente=$('cCli').value.trim();
+    if(muda.length) registaCfg(muda.join(' · '));
+    save(); render();
+  };
+  if($('bSalvaDatas')) $('bSalvaDatas').onclick=()=>{
+    const c=DB.config; const ni=$('cDataInicio').value||'', nf=$('cDataFimPrev').value||'';
+    const muda=[];
+    if(ni!==(c.dataInicio||'')) muda.push('Data de início: '+(c.dataInicio||'(vazia)')+' → '+(ni||'(vazia)'));
+    if(nf!==(c.dataFimPrev||'')) muda.push('Fim previsto: '+(c.dataFimPrev||'(vazia)')+' → '+(nf||'(vazia)'));
+    c.dataInicio=ni; c.dataFimPrev=nf;
+    if(muda.length) registaCfg(muda.join(' · '));
+    save(); render();
+  };
+  const bindSync=(el)=>{ el.onchange=ev=>{
+    const f=ev.target.files[0]; if(!f)return;
+    const r=new FileReader();
+    r.onload=()=>{
+      let p;
+      try{ p=JSON.parse(r.result); }catch(x){ alert('Ficheiro inválido: não é um JSON válido.'); ev.target.value=''; return; }
+      if(!p||p.tipo!=='sync_constroii_autos'){ alert('Este não é um ficheiro de sincronização de autos.\n\nNa app Funcionários, usa o botão "⇄ Exportar autos para a app Empresa" e importa aqui o ficheiro gerado.'); ev.target.value=''; return; }
+      impSyncPacote(p);
+    };
+    r.readAsText(f);
+    ev.target.value='';
+  }; };
+  const abrirSync=()=>{
+    let sf=$('syncFile');
+    if(!sf){ sf=document.createElement('input'); sf.type='file'; sf.accept='.json'; sf.id='syncFile'; sf.style.display='none'; document.body.appendChild(sf); }
+    bindSync(sf);
+    sf.click();
+  };
+  if($('syncFile')) bindSync($('syncFile'));
+  if($('bSyncIn')) $('bSyncIn').onclick=abrirSync;
+  if($('bSyncIn2')) $('bSyncIn2').onclick=abrirSync;
+  if($('bExp')) $('bExp').onclick=()=>{
+    const out={tipo:'constroii_backup_multi', exportado:hojeData(), store:STORE};
+    const a=document.createElement('a');
+    a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(out,null,1));
+    a.download='constroii_empresa_TODAS_OBRAS_'+hojeData()+'.json'; a.click();
+    STORE.ultimoBackup=hojeData(); save(); render();
+  };
+  if($('bImp')) $('bImp').onclick=()=>$('impFile').click();
+  if($('impFile')) $('impFile').onchange=e=>{
+    const f=e.target.files[0]; if(!f)return;
+    const r=new FileReader(); r.onload=()=>{
+      let p;
+      try{ p=JSON.parse(r.result); }catch(x){ alert('Ficheiro inválido: não é um JSON válido.'); e.target.value=''; return; }
+      if(p && p.tipo==='sync_constroii_autos'){
+        if(!confirm('Este é um ficheiro de SINCRONIZAÇÃO de autos (da app Funcionários), não uma cópia de segurança.\n\nQueres sincronizá-lo para a obra ATIVA (acrescentar autos/anulações/salários sem apagar nada)?\n\nOK = sincronizar · Cancelar = não fazer nada')){ e.target.value=''; return; }
+        impSyncPacote(p); e.target.value=''; return;
+      }
+      if(p && p.tipo==='constroii_backup_multi' && p.store && p.store.obras){
+        if(!confirm('Isto substitui TODAS as obras pelas do ficheiro. Continuar?')){ e.target.value=''; return; }
+        STORE=p.store; STORE.obras.forEach(o=>o.db=repararDB(o.db));
+        if(!STORE.obras.find(o=>o.id===STORE.ativa)) STORE.ativa=STORE.obras[0].id;
+        DB=obraAtiva().db; save(); render(); e.target.value=''; return;
+      }
+      if(p && p.config && Array.isArray(p.zones)){
+        if(!confirm('Este ficheiro é de uma obra só. Acrescentar como nova obra?')){ e.target.value=''; return; }
+        const id='obra'+Date.now(); STORE.obras.push({id,nome:(p.config.obra||'Obra importada'),db:repararDB(p)}); STORE.ativa=id; DB=obraAtiva().db; save(); render(); e.target.value=''; return;
+      }
+      alert('Ficheiro inválido.'); e.target.value='';
+    };
+    r.readAsText(f);
+  };
+  if($('bAq')) $('bAq').onclick=async()=>{
+    const inp=$('aqFile');
+    if(!inp.files||!inp.files.length){alert('Escolhe pelo menos um ficheiro.');return;}
+    const mes=$('aqMes').value.trim();
+    if(mes && !mes.match(/^\d{4}-\d{2}$/)){alert('Mês no formato AAAA-MM (ou deixa vazio).');return;}
+    let n=0;
+    try{
+      for(const f of inp.files){
+        await idb.add({nome:f.name,cat:$('aqCat').value,mes,desc:$('aqDesc').value.trim(),tipo:f.type,tamanho:f.size,data:hoje(),blob:f});
+        n++;
+      }
+    }catch(er){ alert('Erro a arquivar: '+er); }
+    inp.value=''; $('aqDesc').value='';
+    alert(n+' documento(s) arquivado(s).');
+    listarArq();
+  };
+  if($('aqFCat')) $('aqFCat').onchange=ev=>{arqFiltCat=ev.target.value;listarArq();};
+  if($('aqFMes')) $('aqFMes').oninput=ev=>{arqFiltMes=ev.target.value.trim();listarArq();};
+  if($('bLimpar')) $('bLimpar').onclick=()=>{
+    if(!confirm('Limpar TODOS os autos?\n\nIsto apaga as zonas/medições e as horas. A configuração (tarifas, cliente, encargos) mantém-se.')) return;
+    const tudo=confirm('Apagar também as CERTIFICAÇÕES e os CUSTOS registados?\n\nOK = apagar tudo (obra do zero)\nCancelar = manter certificações e custos');
+    DB.zones=[]; DB.extras=[];
+    if(tudo){ DB.certs=[]; DB.custos=[]; }
+    registaCfg('Autos limpos'+(tudo?' (incluindo certificações e custos)':' (certificações e custos mantidos)'));
+    save(); render();
+  };
+  if($('bReset')) $('bReset').onclick=()=>{ if(confirm('Isto apaga tudo o que alteraste e volta aos dados iniciais. Continuar?')){ DB=JSON.parse(JSON.stringify(SEED)); save(); render(); }};
+}
+document.getElementById('bGuardarTudo').addEventListener('click', guardarJa);
+document.getElementById('selObra').addEventListener('change', e=>trocarObra(e.target.value));
+document.getElementById('bNovaObra').addEventListener('click', ()=>{ const nome=prompt('Nome da nova obra:'); if(nome===null) return; criarObra(nome.trim()||'Nova obra'); });
+// ── PWA: manifesto inline (sem servidor) para instalar no Android ──
+(function(){
+  try{
+    const icon="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%236B4A8A'/%3E%3Ctext x='256' y='340' font-size='240' text-anchor='middle' fill='white' font-family='sans-serif'%3E📊%3C/text%3E%3C/svg%3E";
+    const manifest={ name:"Constróii · Empresa", short_name:"Empresa", start_url:".", display:"standalone", background_color:"#EFF1EE", theme_color:"#6B4A8A", orientation:"any",
+      icons:[{src:icon,sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}] };
+    const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+    const link=document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
+  }catch(e){}
+})();
+load();
+</script>
+</body>
+</html>
