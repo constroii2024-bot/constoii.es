@@ -248,6 +248,9 @@ function repararDB(db){
   // limpar custos de teste: valor < 1€ (apanha 0,01€ de alojamento, 0,17€ de salário, etc.)
   // (avalia o valor base nos salários, para não apagar um salário real por causa dos encargos)
   db.custos = db.custos.filter(x=>{ const v = (x.cat==='SALARIOS' && x.valorBase!=null) ? x.valorBase : x.valor; return !(Math.abs(v)<1); });
+  // ALOJAMENTO e TRANSPORTES passam a vir SÓ da sincronização da app Funcionários.
+  // Remover os que foram criados à mão na Empresa (sem marca auto) para não duplicarem.
+  db.custos = db.custos.filter(x=> !( (x.cat==='ALOJAMENTO'||x.cat==='TRANSPORTES') && !x.auto ) );
   if(!db.nextCustoId) db.nextCustoId=(db.custos.reduce((a,x)=>Math.max(a,x.id),0))+1;
   // CONVERSÃO de obras antigas (Segóvia): zonas e tarifas com fases por NOME → ids
   const idsAtuais=db.config.fases.map(f=>f.id);
@@ -1365,7 +1368,10 @@ function impSyncPacote(p){
     // primeiro, remover os custos auto-partilhados antigos destas categorias (vão ser repostos com os valores novos)
     // (assim, se um valor baixou ou desapareceu, fica certo)
     if(p.custosPartilhados){
-      DB.custos = DB.custos.filter(x=> !(x.auto && x.partilhado && catsPart.includes(x.cat)) );
+      // remover TODOS os custos auto destas categorias antes de repor — inclui os de versões
+      // antigas que não tinham a marca "partilhado" (eram a causa da duplicação no alojamento/transporte).
+      // Os custos criados à mão na Empresa (sem auto) NÃO são tocados.
+      DB.custos = DB.custos.filter(x=> !(x.auto && catsPart.includes(x.cat)) );
       (p.custosPartilhados||[]).forEach(s=>{
         const cat=catsPart.includes(s.cat)?s.cat:'OUTROS';
         DB.custos.push({id:DB.nextCustoId++,mes:s.mes,cat,desc:(lblPart[cat]||'Custo')+' (partilhado, sincronizado)',valorBase:s.valor,valor:s.valor,data:'',auto:true,partilhado:true});
